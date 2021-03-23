@@ -1,0 +1,47 @@
+@function getWidth($size, $base: 12) {
+    @return (100*$size / $base) * 1%;
+}
+
+.grid {
+    width: 75%;
+    padding: 0;
+    height: auto;
+    margin: auto;
+    display: block;
+    background-color: $background;
+}
+
+.grid > .grid-row {
+    width: 100%;
+    height: auto;
+    margin: auto;
+    display: flex;
+}
+
+[class*='col-'] {
+    border-radius: 5px;
+    height: auto;
+    text-align: center;
+}
+
+@for $column from 1 through $max-columns {
+    .grid > .col-#{$column}, .row > .col-#{$column} {
+        width: getWidth($column, $max-columns);
+    }            
+}
+
+@each $device, $pixels in $devices {
+    @media (max-width: $pixels) {
+        @if $pixels <= 768px {
+            .grid > .row {
+                width: 100%;
+                display: block;
+            }
+        }
+        @for $column from 1 through $max-columns {
+            .row > .col-#{$device}-#{$column}{
+                width: getWidth($column, $max-columns);
+            }            
+        }
+    }
+}
