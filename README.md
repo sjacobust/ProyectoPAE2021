@@ -43,4 +43,4 @@ Los Administradores tendrían los permisos necesarios para modificar los platill
 
 ## Autores
 
-Santiago Jacobus
+Santiago Jacobus y Miguel Aguilar
