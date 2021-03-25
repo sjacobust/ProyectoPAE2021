@@ -14,7 +14,7 @@ Esta otra interfaz sería una vista a qué usuarios hay, a qué dirección se le
 
 ### Bases de Datos
 
-Se usaría MongoDB como base de datos, las diferentes colecciones de datos serían:
+Se usará MongoDB como base de datos, las diferentes colecciones de datos serían:
 
 1. Usuarios
   - Nombre
@@ -39,7 +39,7 @@ Se usaría MongoDB como base de datos, las diferentes colecciones de datos serí
   - Costo por Medida
   - Platillos que se pueden hacer
 
-Los Administradores tendrían los permisos necesarios para modificar los platillos y/o eliminarlos de la plataforma, mientras que los usuarios sólo tienen permiso para ver los que sí estén en la base de datos (ya sea para comprar un sólo platillo o una orden). Este comportamiento sería igual para los Insumos. Sin embargo, los Usuarios no podrán ver a otros usuarios (esto incluye sus nombres, direcciones o compras).
+Los Administradores tendrán los permisos necesarios para modificar los platillos y/o eliminarlos de la plataforma, mientras que los usuarios sólo tendrán permiso para ver los que sí estén en la base de datos (ya sea para comprar un sólo platillo o una orden). Este comportamiento sería igual para los Insumos. Sin embargo, los Usuarios no podrán ver a otros usuarios (esto incluye sus nombres, direcciones o compras).
 
 ## Autores
 
