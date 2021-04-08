@@ -1,0 +1,17 @@
+@import '../../../../styles/sass/variables';
+
+.nav-item:hover, .nav-item a:hover {
+    background-color: $accent-color;
+    color: $white-color;
+}
+
+nav {
+    background-color: $navbar-color;
+    border-radius: .25em;
+    padding: 0;
+}
+
+
+li a{
+    height: auto;
+}

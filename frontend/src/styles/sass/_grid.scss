@@ -25,7 +25,7 @@
 }
 
 @for $column from 1 through $max-columns {
-    .grid > .col-#{$column}, .row > .col-#{$column} {
+    .grid > .col-#{$column}, .grid-row > .col-#{$column} {
         width: getWidth($column, $max-columns);
     }            
 }
@@ -33,13 +33,13 @@
 @each $device, $pixels in $devices {
     @media (max-width: $pixels) {
         @if $pixels <= 768px {
-            .grid > .row {
+            .grid > .grid-row {
                 width: 100%;
                 display: block;
             }
         }
         @for $column from 1 through $max-columns {
-            .row > .col-#{$device}-#{$column}{
+            .grid-row > .col-#{$device}-#{$column}{
                 width: getWidth($column, $max-columns);
             }            
         }

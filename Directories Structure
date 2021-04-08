@@ -1,0 +1,18 @@
+- ProyectoPAE2021
+    - backend
+        - routes
+        - src
+            - controllers
+            - middlewares
+            - models
+    - frontend
+        - app
+            - common
+                - components
+            - components
+        - assets
+            - images
+        - environments
+        - styles
+            - sass
+        
