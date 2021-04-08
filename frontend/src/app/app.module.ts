@@ -8,6 +8,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { HeaderComponent } from './common/components/header/header.component';
+import { HomeComponent } from './components/home/home.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { HeaderComponent } from './common/components/header/header.component';
     RegisterComponent,
     NotFoundComponent,
     AboutUsComponent,
-    HeaderComponent
+    HeaderComponent,
+    HomeComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
