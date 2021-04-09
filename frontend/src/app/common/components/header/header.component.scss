@@ -1,7 +1,12 @@
 @import '../../../../styles/sass/variables';
+@import '../../../../styles/sass/mixins';
 
 .navBox {
-    box-shadow: 0px 10px;
+    box-shadow: 0em .25em 8em $white-color;
+}
+
+* {
+    @include openSans-font;
 }
 
 nav {
@@ -10,8 +15,17 @@ nav {
     padding: 0;
 }
 
+.nav-item:hover {
+    background-color: $background;
+    border-radius: .25em;
+}
 
 li a{
     height: auto;
     color: $white-color;
+}
+
+li a:hover{
+    color: $primary-color;
+    font-weight: bold;
 }

@@ -8,6 +8,8 @@ body {
     @include openSans-font;
     background-color: $primary-color;
     color: $navbar-color;
+    margin: 0;
+    padding: 0;
 }
 
 .verticalHr {

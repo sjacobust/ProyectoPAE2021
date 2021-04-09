@@ -9,9 +9,10 @@
     margin: auto;
     display: block;
     background-color: $background;
+    border-radius: .25em;
 }
 
-.grid > .grid-row {
+.grid .grid-row {
     width: 100%;
     height: auto;
     margin: auto;
@@ -20,12 +21,11 @@
 
 [class*='col-'] {
     border-radius: 5px;
-    height: auto;
     text-align: center;
 }
 
 @for $column from 1 through $max-columns {
-    .grid > .col-#{$column}, .grid-row > .col-#{$column} {
+    .grid-row .col-#{$column}, .grid-row .col-#{$column} {
         width: getWidth($column, $max-columns);
     }            
 }
@@ -33,13 +33,17 @@
 @each $device, $pixels in $devices {
     @media (max-width: $pixels) {
         @if $pixels <= 768px {
-            .grid > .grid-row {
+            .grid {
+                width: 100%;
+            }
+            .grid .grid-row {
                 width: 100%;
                 display: block;
+                text-align: center;
             }
         }
         @for $column from 1 through $max-columns {
-            .grid-row > .col-#{$device}-#{$column}{
+            .grid-row .col-#{$device}-#{$column}{
                 width: getWidth($column, $max-columns);
             }            
         }

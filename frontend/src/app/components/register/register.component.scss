@@ -1,0 +1,43 @@
+@import './../../../styles/sass/variables';
+
+
+[class*='col-'] {
+    border-radius: 5px;
+    text-align: right;
+}
+
+.grid .grid-row{
+    padding-top: .25em;
+}
+
+[class*='col-'] input {
+    text-align: left;
+    font-size: 14px;
+    margin-left: 1em;
+}
+
+.loginGrid {
+    margin: auto;
+    padding: auto;
+    text-align: left;
+    font-weight: bold;
+}
+
+input {
+    height: auto;
+}
+
+@each $device, $pixels in $devices {
+    @media (max-width: $pixels) {
+        @if $pixels <= 768px {
+            label, hr {
+                visibility: hidden;
+            }
+        } @else {
+            label, hr {
+                visibility: visible;
+            }
+        }
+    }
+}
+
