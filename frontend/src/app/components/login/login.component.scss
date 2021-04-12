@@ -1,4 +1,29 @@
+@import '../../../styles/sass/variables';
+@import '../../../styles/sass/mixins';
+
 input {
     text-align: left;
     font-size: 12px;
+}
+
+p {
+    text-align: left;
+}
+
+label {
+    text-align: right;
+}
+
+.grid {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+button {
+    background-color: $accent-color;
+    color: $white-color;
+}
+
+.login-button {
+    text-align: right;
 }

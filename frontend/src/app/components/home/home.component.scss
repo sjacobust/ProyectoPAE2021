@@ -1,4 +1,36 @@
-img {
+@import '../../../styles/sass/variables';
+@import '../../../styles/sass/mixins';
+
+.logo-img {
     border-radius: 50%;
-    float: right;
+}
+
+.grid {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.grid .grid-row {
+    width: 75%;
+}
+
+.right-aligned {
+    text-align: right;
+}
+
+.left-aligned {
+    text-align: left;
+}
+
+@each $device, $pixels in $devices {
+    @media (max-width: $pixels) {
+        @if $pixels <= 768px {
+            .grid .grid-row {
+                width: 100%;
+            }
+            img {
+                border-radius: 50%;
+            }
+        }
+    }
 }
