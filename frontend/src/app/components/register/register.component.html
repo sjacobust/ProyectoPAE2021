@@ -1,37 +1,47 @@
 <div class="grid">
   <div class="grid-row">
-    <div class="col-9 col-t-12 col-m-12">
-      <div class="grid">
-        <div class="grid-row">
-          <h3 class="col-12">Regístrate</h3>
-        </div>
-        <div class="grid-row">
-          <label for="name" class="col-3 col-m-12">Nombre:</label>
-          <input type="text" name="name" id="name" placeholder="Nombre" class="col-3 col-m-12" required>
-          <label for="lastname" class="col-3 col-m-12">Apellido:</label>
-          <input type="text" name="lastname" id="lastname" placeholder="Apellido" class="col-3 col-m-12" required>
-        </div>
-        <div class="grid-row">
-          <label for="correo" class="col-3 col-m-12">Correo:</label>
-          <input type="text" name="correo" id="correo" placeholder="Correo" class="col-3 col-m-12" required>
-          <label for="phone" class="col-3 col-m-12">Teléfono:</label>
-          <input type="tel" name="phone" id="phone" placeholder="Teléfono" class="col-3 col-m-12" required>
-        </div>
-        <div class="grid-row">
-          <label for="password" class="col-3 col-m-12">Contraseña:</label>
-          <input type="password" name="password" id="password" placeholder="Contraseña" class="col-3 col-m-12" required>
-          <label for="confirmation" class="col-3 col-m-12">Confirmar Contraseña:</label>
-          <input type="password" name="confirmation" id="confirmation" placeholder="Contraseña" class="col-3 col-m-12" required>
+    <div class="grid col-8">
+      <div class="grid-row">
+        <div class="col-12">
+          <h3>Regístrate</h3>
         </div>
       </div>
+      <div class="grid-row">
+        <div class="col-6">
+          <label for="name">Nombre:</label>
+          <input type="text" name="name" id="inputName" placeholder="Nombre">
+        </div>
+        <div class="col-6">
+          <label for="name">Apellido:</label>
+          <input type="text" name="lastname" id="inputLastname" placeholder="Apellido">
+        </div>
+      </div>
+      <div class="grid-row">
+        <div class="col-6">
+          <label for="name">Email:</label>
+          <input type="email" name="email" id="inputEmail" placeholder="Correo">
+        </div>
+        <div class="col-6">
+          <label for="telephone">Teléfono:</label>
+          <input type="number" name="telephone" id="inputTel" placeholder="Teléfono">
+        </div>
+      </div>
+
     </div>
     <hr class="verticalHr">
-    <div class="col-3 col-t-12 col-m-12">
-      <div class="grid loginGrid">
-        <div class="grid-row">
+    <div class="grid col-3">
+      <div class="grid-row">
+        <div class="col-12">
+          <h3>Inicia Sesión</h3>
+        </div>
+      </div>
+      <div class="grid-row">
+        <div class="col-12">
           <p>¿Ya tienes cuenta?</p>
         </div>
-        <div class="grid-row">
+      </div>
+      <div class="grid-row">
+        <div class="col-12">
           <a href="/login">¡Inicia Sesión!</a>
         </div>
       </div>
