@@ -43,7 +43,7 @@ Los Administradores tendrán los permisos necesarios para modificar los platillo
 
 ## Instalación del proyecto
 
-Para instalar tanto el frontend como el backend se requiere [Angular](https://angular.io/) y el [Node Package Manager (npm)](https://www.npmjs.com/) (respectivamente), una vez instalados, lo primero que se tiene que hacer es cambiar de directorio que se quiera instalar:
+Para instalar tanto el frontend como el backend se requiere [Angular](https://angular.io/) y el [Node Package Manager (npm)](https://www.npmjs.com/) (respectivamente). Cabe mencionar que ambos necesitan que se instale [NodeJs](https://nodejs.org/en/). Una vez instalados, lo primero que se tiene que hacer es cambiar de directorio que se quiera instalar:
 
 ```bash
 cd frontend
@@ -69,7 +69,21 @@ ng serve -o
 
 Este comando sirve para que cualquier cambio que se haga al código y se guarde en el proyecto, la página se refrescará con los cambios hechos. Mientras que la bandera "-o" significa que abrirá automáticamente el proyecto en el browser predeterminado. 
 
-Para correr el backend se necesita hacer un archivo ".env". En este archivo se necesitan especificar varias cosas, por ahora sólo se pone la variable "PORT". Hay un ".env.example" que indica qué variables se tienen que asignar. De cualquier modo, este README se irá modificando con las diferentes variables que se necesitarán cambiar una vez agregadas al proyecto.
+Para correr el backend se necesita hacer un archivo ".env". En este archivo se necesitan especificar varias cosas, pero por ahora sólo se pone la variable "PORT". Hay un ".env.example" que indica qué variables se tienen que asignar. De cualquier modo, este README se irá modificando con las diferentes variables que se necesitarán cambiar una vez agregadas al proyecto.
+
+Una vez hecho el archivo ".env", el backend se puede correr con [nodemon](https://www.npmjs.com/package/nodemon) de la siguiente manera:
+
+```bash
+nodemon .
+```
+
+Si no se tiene nodemon, se puede correr con node:
+
+```bash
+node .
+```
+
+**_NOTA:_ Todavía no se implementan los scripts en el package.json para correr los proyectos.**
 
 ## Autores
 
