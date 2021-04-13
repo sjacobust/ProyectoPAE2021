@@ -1,40 +1,76 @@
 <div class="grid">
   <div class="grid-row">
-    <div class="col-9 col-t-12 col-m-12">
-      <div class="grid">
-        <div class="grid-row">
-          <h3 class="col-12">Regístrate</h3>
-        </div>
-        <div class="grid-row">
-          <label for="name" class="col-3 col-m-12">Nombre:</label>
-          <input type="text" name="name" id="name" placeholder="Nombre" class="col-3 col-m-12" required>
-          <label for="lastname" class="col-3 col-m-12">Apellido:</label>
-          <input type="text" name="lastname" id="lastname" placeholder="Apellido" class="col-3 col-m-12" required>
-        </div>
-        <div class="grid-row">
-          <label for="correo" class="col-3 col-m-12">Correo:</label>
-          <input type="text" name="correo" id="correo" placeholder="Correo" class="col-3 col-m-12" required>
-          <label for="phone" class="col-3 col-m-12">Teléfono:</label>
-          <input type="tel" name="phone" id="phone" placeholder="Teléfono" class="col-3 col-m-12" required>
-        </div>
-        <div class="grid-row">
-          <label for="password" class="col-3 col-m-12">Contraseña:</label>
-          <input type="password" name="password" id="password" placeholder="Contraseña" class="col-3 col-m-12" required>
-          <label for="confirmation" class="col-3 col-m-12">Confirmar Contraseña:</label>
-          <input type="password" name="confirmation" id="confirmation" placeholder="Contraseña" class="col-3 col-m-12" required>
+    <form class="grid col-8" method="POST">
+      <div class="grid-row">
+        <div class="col-12">
+          <h3>Regístrate</h3>
         </div>
       </div>
+      <div class="grid-row">
+        <div class="col-d-6 col-l-6 col-t-6 col-m-12">
+          <label for="name">Nombre(s):</label>
+          <input type="text" name="name" id="inputName" placeholder="Nombre" class="form-control">
+        </div>
+        <div class="col-d-6 col-l-6 col-t-6 col-m-12">
+          <label for="lastname">Apellido(s):</label>
+          <input type="text" name="lastname" id="inputLastname" placeholder="Apellido" class="form-control">
+        </div>
+      </div>
+      <div class="grid-row">
+        <div class="col-d-6 col-l-6 col-t-6 col-m-12">
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="inputEmail" placeholder="Correo" class="form-control">
+        </div>
+        <div class="col-d-6 col-l-6 col-t-6 col-m-12">
+          <label for="telephone">Teléfono:</label>
+          <input type="number" name="telephone" id="inputTel" placeholder="Teléfono" class="form-control">
+        </div>
+      </div>
+      <div class="grid-row">
+        <div class="col-d-6 col-l-6 col-t-6 col-m-12">
+          <label for="password">Contraseña:</label>
+          <input type="password" name="password" id="inputPassword" placeholder="Contraseña" class="form-control">
+        </div>
+        <div class="col-d-6 col-l-6 col-t-6 col-m-12">
+          <label for="confirmPswd">Confirmar Contraseña:</label>
+          <input type="password" name="confirmPswd" id="inputConfirmPswd" placeholder="Confirmar Contraseña" class="form-control">
+        </div>
+      </div>
+      <div class="grid-row">
+        <div class="col-d-5 col-m-12">
+          <button class="btn loginButton">Login</button>
+        </div>
+        <div class="col-d-1 col-m-12">
+          <p>O</p>
+        </div>
+        <div class="col-d-6 col-m-12">
+          <input type="image" src="./assets/images/btn_google_signin_light_normal_web.png" alt="Sign In With Google" formenctype="multipart/form-data">
+        </div>
+      </div>
+    </form>
+    <div *ngIf="isMobile else verticalHR">
+      <hr>
     </div>
-    <hr class="verticalHr">
-    <div class="col-3 col-t-12 col-m-12">
-      <div class="grid loginGrid">
-        <div class="grid-row">
+    <div class="grid col-d-3 col-m-12">
+      <div class="grid-row">
+        <div class="col-12">
+          <h3>Inicia Sesión</h3>
+        </div>
+      </div>
+      <div class="grid-row">
+        <div class="col-12">
           <p>¿Ya tienes cuenta?</p>
         </div>
-        <div class="grid-row">
+      </div>
+      <div class="grid-row">
+        <div class="col-12">
           <a href="/login">¡Inicia Sesión!</a>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #verticalHR>
+  <hr class="verticalHr">
+</ng-template>

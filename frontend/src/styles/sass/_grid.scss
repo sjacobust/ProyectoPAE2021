@@ -22,15 +22,19 @@
 [class*='col-'] {
     border-radius: 5px;
     text-align: center;
-}
-
-@for $column from 1 through $max-columns {
-    .grid-row .col-#{$column}, .grid-row .col-#{$column} {
-        width: getWidth($column, $max-columns);
-    }            
+    padding: .25em;
 }
 
 @each $device, $pixels in $devices {
+    @if ($pixels >= 1200px) {
+        @media (min-width: $pixels) {
+            @for $column from 1 through $max-columns {
+                .grid-row .col-#{$device}-#{$column}{
+                    width: getWidth($column, $max-columns);
+                }            
+            }
+        }
+    }
     @media (max-width: $pixels) {
         @if $pixels <= 768px {
             .grid {

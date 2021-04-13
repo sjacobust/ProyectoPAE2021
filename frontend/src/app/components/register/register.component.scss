@@ -1,43 +1,29 @@
-@import './../../../styles/sass/variables';
+@import '../../../styles/sass/variables';
+@import '../../../styles/sass/mixins';
 
-
-[class*='col-'] {
-    border-radius: 5px;
-    text-align: right;
+label {
+    margin: .1em;
 }
 
-.grid .grid-row{
+.grid-row {
     padding-top: .25em;
 }
 
-[class*='col-'] input {
-    text-align: left;
-    font-size: 14px;
-    margin-left: 1em;
-}
-
-.loginGrid {
-    margin: auto;
-    padding: auto;
-    text-align: left;
-    font-weight: bold;
-}
-
-input {
-    height: auto;
+.loginButton {
+    background-color: $accent-color;
+    color: white;
 }
 
 @each $device, $pixels in $devices {
     @media (max-width: $pixels) {
-        @if $pixels <= 768px {
-            label, hr {
-                visibility: hidden;
+        @if $pixels > 480px {
+            .grid-row {
+                display: flex;
             }
         } @else {
-            label, hr {
-                visibility: visible;
+            .grid-row {
+                display: initial;
             }
         }
     }
 }
-
