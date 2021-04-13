@@ -1,1 +1,47 @@
-<p>menu works!</p>
+<div class="grid flex-grid">
+  <div class="grid-row">
+    <img src="{{menu.img}}" alt="Foto del Platillo" class="col-d-3 col-t-3 col-m-6">
+    <div class="col-d-9 col-t-6 col-m-12 grid block-grid">
+      <div class="grid-row">
+        <div class="col-d-6 col-m-12">
+          <div class="grid">
+            <div class="grid-row">
+              <div class="col-d-12">
+                <h2>{{menu.dish}}</h2>
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-d-12">
+                <h3>Descripción:</h3>
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-d-12">
+                <p>{{menu.description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-d-6 col-m-12">
+          <div class="grid">
+            <div class="grid-row">
+              <div class="col-d-12 col-t-12 col-m-12">
+                <h3>Precio:</h3>
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-d-12 col-t-12 col-m-12">
+                <p class="price">${{menu.price}}.00 MXN</p>
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-d-12 col-t-12 col-m-12">
+                <button class="btn">Añadir al Pedido <i class="fas fa-shopping-basket"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
