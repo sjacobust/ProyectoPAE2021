@@ -1,29 +1,38 @@
 @import '../../../styles/sass/variables';
 @import '../../../styles/sass/mixins';
 
-input {
-    text-align: left;
-    font-size: 12px;
+label {
+    margin: .1em;
+}
+
+.grid-row {
+    padding-top: .25em;
+}
+
+.loginButton {
+    background-color: $accent-color;
+    color: white;
 }
 
 p {
-    text-align: left;
+    font-weight: bold;
 }
 
-label {
-    text-align: right;
+.login-grid {
+    text-align: center;
+    padding-left: 20%;
 }
 
-.grid {
-    padding-top: 1em;
-    padding-bottom: 1em;
-}
-
-button {
-    background-color: $accent-color;
-    color: $white-color;
-}
-
-.login-button {
-    text-align: right;
+@each $device, $pixels in $devices {
+    @media (max-width: $pixels) {
+        @if $pixels > 480px {
+            .grid-row {
+                display: flex;
+            }
+        } @else {
+            .grid-row {
+                display: initial;
+            }
+        }
+    }
 }
