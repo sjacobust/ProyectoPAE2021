@@ -1,7 +1,34 @@
+@import '../../../styles/sass/variables';
+@import '../../../styles/sass/mixins';
+
 label {
     margin: .1em;
 }
 
 .grid-row {
     padding-top: .25em;
+}
+
+.googleButton {
+    background-image: image("./assets/images/btn_google_signin_ligjt_normal_web.png");
+    background-size: cover;
+}
+
+.loginButton {
+    background-color: $accent-color;
+    color: white;
+}
+
+@each $device, $pixels in $devices {
+    @media (max-width: $pixels) {
+        @if $pixels > 480px {
+            .grid-row {
+                display: flex;
+            }
+        } @else {
+            .grid-row {
+                display: initial;
+            }
+        }
+    }
 }
