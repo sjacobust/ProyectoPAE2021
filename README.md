@@ -41,6 +41,50 @@ Se usará MongoDB como base de datos, las diferentes colecciones de datos sería
 
 Los Administradores tendrán los permisos necesarios para modificar los platillos y/o eliminarlos de la plataforma, mientras que los usuarios sólo tendrán permiso para ver los que sí estén en la base de datos (ya sea para comprar un sólo platillo o una orden). Este comportamiento sería igual para los Insumos. Sin embargo, los Usuarios no podrán ver a otros usuarios (esto incluye sus nombres, direcciones o compras).
 
+## Instalación del proyecto
+
+Para instalar tanto el frontend como el backend se requiere [Angular](https://angular.io/) y el [Node Package Manager (npm)](https://www.npmjs.com/) (respectivamente). Cabe mencionar que ambos necesitan que se instale [NodeJs](https://nodejs.org/en/). Una vez instalados, lo primero que se tiene que hacer es cambiar de directorio que se quiera instalar:
+
+```bash
+cd frontend
+```
+
+O
+
+```bash
+cd backend
+```
+
+Ya en el directorio escogido, usar npm para instalar los paquetes.:
+
+```bash
+npm install
+```
+
+Para correr el frontend, se requiere usar los comandos del CLI de Angular:
+
+```bash
+ng serve -o
+```
+
+Este comando sirve para que cualquier cambio que se haga al código y se guarde en el proyecto, la página se refrescará con los cambios hechos. Mientras que la bandera "-o" significa que abrirá automáticamente el proyecto en el browser predeterminado. 
+
+Para correr el backend se necesita hacer un archivo ".env". En este archivo se necesitan especificar varias cosas, pero por ahora sólo se pone la variable "PORT". Hay un ".env.example" que indica qué variables se tienen que asignar. De cualquier modo, este README se irá modificando con las diferentes variables que se necesitarán cambiar una vez agregadas al proyecto.
+
+Una vez hecho el archivo ".env", el backend se puede correr con [nodemon](https://www.npmjs.com/package/nodemon) de la siguiente manera:
+
+```bash
+nodemon .
+```
+
+Si no se tiene nodemon, se puede correr con node:
+
+```bash
+node .
+```
+
+**_NOTA:_ Todavía no se implementan los scripts en el package.json para correr los proyectos.**
+
 ## Autores
 
 Santiago Jacobus y Miguel Aguilar
