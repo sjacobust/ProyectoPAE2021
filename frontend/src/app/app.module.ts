@@ -10,6 +10,10 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { HeaderComponent } from './common/components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { ProductsComponent } from './components/products/products.component';
+import { IngredientsComponent } from './common/components/ingredients/ingredients.component';
+import { TaquizaComponent } from './common/components/taquiza/taquiza.component';
+import { DishesComponent } from './common/components/dishes/dishes.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import { MenuComponent } from './components/menu/menu.component';
     AboutUsComponent,
     HeaderComponent,
     HomeComponent,
-    MenuComponent
+    MenuComponent,
+    ProductsComponent,
+    IngredientsComponent,
+    TaquizaComponent,
+    DishesComponent
   ],
   imports: [
     BrowserModule,
