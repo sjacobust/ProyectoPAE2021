@@ -1,18 +1,46 @@
-<header>
-    <nav class="nav">
+<nav class="navbar navbar-expand-lg navbar-dark navBox">
+  <a href="home"><img src="./assets/images/logo_amet.jpg" alt="Casa Amet" width="75" height="75"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <img src="./assets/images/logo_amet.jpeg" alt="Casa Amet" width="75" height="75">
+        <a class="nav-link" href="home">Inicio</a>
       </li>
-      <li class="nav-item alignVertically">
-        <a class="nav-link" href="/">Inicio</a>
-      </li>
-      <li class="nav-item alignVertically">
+      <li class="nav-item">
         <a class="nav-link" href="about-us">Acerca de Nosotros</a>
       </li>
-      <li class="nav-item alignVertically">
-        <a href="login" class="nav-link">Login</a>
-      </li><li class="nav-item alignVertically">
-        <a href="register" class="nav-link">Regístrate</a>
+      <li class="nav-item">
+        <a href="menu" class="nav-link">Menú</a>
       </li>
-    </nav>
-</header>
+      <li class="nav-item dropdown" *ngIf="userIsLoggedIn; else loginDropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{user.name}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Perfil</a>
+          <a class="dropdown-item" href="#">Cerrar Sesión</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+<ng-template #loginDropdown>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+      Cuenta
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" href="login">Iniciar Sesión</a>
+      <a class="dropdown-item" href="register">Regístrate</a>
+    </div>
+  </li>
+</ng-template>

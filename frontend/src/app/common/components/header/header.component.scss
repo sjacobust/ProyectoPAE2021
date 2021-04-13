@@ -1,17 +1,31 @@
 @import '../../../../styles/sass/variables';
+@import '../../../../styles/sass/mixins';
 
-.nav-item:hover, .nav-item a:hover {
-    background-color: $accent-color;
-    color: $white-color;
+* {
+    @include openSans-font;
 }
 
-nav {
+.navbar, .dropdown-menu {
     background-color: $navbar-color;
     border-radius: .25em;
     padding: 0;
 }
 
+.nav-item:hover, .dropdown-item:hover {
+    background-color: $background;
+    border-radius: .25em;
+}
 
-li a{
+.nav-item a, .dropdown-item, .dropdown-toggle{
     height: auto;
+    color: $white-color !important;
+}
+
+.nav-item a:hover, .dropdown-item:hover {
+    color: $primary-color !important;
+    font-weight: bold;
+}
+
+img {
+    border-radius: 50%;
 }

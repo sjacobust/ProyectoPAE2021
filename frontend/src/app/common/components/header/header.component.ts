@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+
+  user:any = "";
+  userIsLoggedIn:boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
+    if(this.user) {
+      this.userIsLoggedIn = true;
+    }
   }
 
 }

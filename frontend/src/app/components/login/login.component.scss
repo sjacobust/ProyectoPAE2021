@@ -1,0 +1,38 @@
+@import '../../../styles/sass/variables';
+@import '../../../styles/sass/mixins';
+
+label {
+    margin: .1em;
+}
+
+.grid-row {
+    padding-top: .25em;
+}
+
+.loginButton {
+    background-color: $accent-color;
+    color: white;
+}
+
+p {
+    font-weight: bold;
+}
+
+.login-grid {
+    text-align: center;
+    padding-left: 20%;
+}
+
+@each $device, $pixels in $devices {
+    @media (max-width: $pixels) {
+        @if $pixels > 480px {
+            .grid-row {
+                display: flex;
+            }
+        } @else {
+            .grid-row {
+                display: initial;
+            }
+        }
+    }
+}
