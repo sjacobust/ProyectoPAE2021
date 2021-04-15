@@ -28,6 +28,10 @@ img {
     width: 100%;
 }
 
+.no-menu {
+    text-align: center;
+}
+
 @each $device, $pixels in $devices {
     @media (max-width: $pixels) {
         @if $pixels > 480px {
@@ -39,5 +43,11 @@ img {
                 display: block;
             }
         }
+        @if $pixels >= 1200px {
+            .next-week-grid, .verticalHr {
+                display: none;
+            }
+        }
     }
+    
 }

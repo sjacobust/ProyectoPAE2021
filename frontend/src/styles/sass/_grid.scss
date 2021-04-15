@@ -26,10 +26,10 @@
 }
 
 @each $device, $pixels in $devices {
-    @if ($pixels >= 1200px) {
+    @if ($pixels == 1200px) {
         @media (min-width: $pixels) {
             @for $column from 1 through $max-columns {
-                .grid-row .col-#{$device}-#{$column}{
+                .grid-row .col-s-#{$column}{
                     width: getWidth($column, $max-columns);
                 }            
             }
@@ -38,16 +38,16 @@
     @media (max-width: $pixels) {
         @if $pixels <= 768px {
             .grid {
-                width: 100%;
+                width: 100% !important;
             }
             .grid .grid-row {
-                display: block;
-                text-align: center;
+                display: block !important;
+                text-align: center !important;
             }
         }
         @for $column from 1 through $max-columns {
             .grid-row .col-#{$device}-#{$column}{
-                width: getWidth($column, $max-columns);
+                width: getWidth($column, $max-columns) !important;
             }            
         }
     }

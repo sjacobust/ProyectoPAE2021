@@ -8,16 +8,42 @@ import { Component, OnInit } from '@angular/core';
 export class MenuComponent implements OnInit {
 
 
-  menu:any = {
-    "dish": "Seitán Asado",
-    "description": "Cortes de nuestro seitán artesanal, marinados y puestos al asador. Ideal para un domingo con amigxs.",
-    "price": 150,
-    "img": "./assets/images/carne_asada.jpg"
-  };
+  week:number = 0;
+  menu:Array<any> = [];
 
-  constructor() { }
+  constructor() { 
+    this.initiateMenu();
+  }
 
   ngOnInit(): void {
+    
+    let date:Date = this.getTodaysDate();
+    this.week = this.getWeekOfMonth(date);
+    console.log(this.week);
+  }
+
+  getWeekOfMonth(date: Date) {
+    let adjustedDate: number = date.getDate() + date.getDay();
+    let prefixes: string[] = ['0', '1', '2', '3', '4', '5'];
+    return (parseInt(prefixes[0 | adjustedDate / 7]));
+  }
+
+  getTodaysDate() {
+    let date:Date = new Date();
+    let dd = String(date.getDate()).padStart(2, '0');
+    let mm = String(date.getMonth() + 1).padStart(2, '0');
+    let yyyy = date.getFullYear();
+    date = new Date(mm + '/' + dd + '/' + yyyy);
+    return date;
+  }
+
+  initiateMenu() {
+    let isMenuFilled = false
+    if (isMenuFilled) {
+      
+    } else {
+      this.menu = []
+    }
   }
 
 }
