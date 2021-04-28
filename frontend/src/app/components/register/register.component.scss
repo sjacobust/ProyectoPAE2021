@@ -27,3 +27,7 @@ label {
         }
     }
 }
+
+.ng-invalid.ng-dirty {
+    border-color: red;
+}
