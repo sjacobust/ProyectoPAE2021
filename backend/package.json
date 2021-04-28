@@ -17,7 +17,13 @@
   },
   "homepage": "https://github.com/sjacobust/ProyectoPAE2021#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "google-auth-library": "^7.0.4",
+    "mongodb": "^3.6.6",
+    "swagger-jsdoc": "^6.0.0",
+    "swagger-ui-express": "^4.1.6"
   }
 }

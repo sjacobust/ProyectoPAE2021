@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { IngredientsComponent } from './common/components/ingredients/ingredients.component';
 import { TaquizaComponent } from './common/components/taquiza/taquiza.component';
 import { DishesComponent } from './common/components/dishes/dishes.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,11 +30,14 @@ import { DishesComponent } from './common/components/dishes/dishes.component';
     ProductsComponent,
     IngredientsComponent,
     TaquizaComponent,
-    DishesComponent
+    DishesComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

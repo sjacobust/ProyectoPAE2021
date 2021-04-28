@@ -1,6 +1,5 @@
 const crypto = require('crypto');
-const db = require('./../controllers/db.controller');
-const DBModel = require('./db');
+const DBModel = require('./database');
 
 const User = require('./user');
 

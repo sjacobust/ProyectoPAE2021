@@ -1,9 +1,12 @@
-const DBModel = require('./db');
+const Database = require('./database');
 
-class User extends DBModel {
+class Users extends Database {
 
   constructor() {
-    super('users');
+    console.log("user model initialized");
+    super();
+    this.useCollection('users');
+
   }
 
   validate(username, password) {
@@ -12,7 +15,6 @@ class User extends DBModel {
       password: password
     })
   }
-
 }
 
-module.exports = new User();
+module.exports = new Users();

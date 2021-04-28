@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuService } from '../../common/services/menu.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,12 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-
+  menu:any[] = []
   week:number = 0;
-  menu:Array<any> = [];
 
-  constructor() { 
-    this.initiateMenu();
+
+  constructor(private menuService:MenuService) { 
+    console.log(menuService);
+    this.menuService = menuService;
   }
 
   ngOnInit(): void {
@@ -20,6 +22,9 @@ export class MenuComponent implements OnInit {
     let date:Date = this.getTodaysDate();
     this.week = this.getWeekOfMonth(date);
     console.log(this.week);
+    this.menuService.getDishes().then(response => {
+      this.menu = response;
+    });
   }
 
   getWeekOfMonth(date: Date) {
@@ -37,13 +42,6 @@ export class MenuComponent implements OnInit {
     return date;
   }
 
-  initiateMenu() {
-    let isMenuFilled = false
-    if (isMenuFilled) {
-      
-    } else {
-      this.menu = []
-    }
-  }
+  
 
 }
