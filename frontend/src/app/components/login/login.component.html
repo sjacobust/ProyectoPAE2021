@@ -11,6 +11,11 @@
           <p>El correo o la contraseña son incorrectos. Verifique su información</p>
         </div>
       </div>
+      <div class="grid-row" *ngIf="infoMessage.length > 0">
+        <div class="col-s-12">
+          <h3>{{infoMessage}}</h3>
+        </div>
+      </div>
       <div class="grid-row">
         <div class="col-s-3 col-d-3 col-m-12 col-t-12"><label for="email">Correo:</label></div>
         <div class="col-s-9 col-d-9 col-m-12 col-t-12"><input type="email" name="email" id="inputEmail" placeholder="Correo" class="form-control" [(ngModel)]="credentials.email"></div>
@@ -48,7 +53,7 @@
         </div>
       </div>
       <div class="grid-row">
-        <div class="col-s-12col-d-12">
+        <div class="col-s-12 col-d-12">
           <p>¿No tienes cuenta?</p>
         </div>
       </div>

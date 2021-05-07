@@ -1,4 +1,5 @@
 const Database = require('./database');
+const ObjectID = require('mongodb').ObjectID;
 
 class Users extends Database {
 
@@ -15,6 +16,13 @@ class Users extends Database {
       password: password
     })
   }
+
+  findById(userId) {
+    return this.findOne({
+      _id: ObjectID(userId)
+    });
+  }
+
 }
 
 module.exports = new Users();

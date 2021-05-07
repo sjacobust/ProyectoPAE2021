@@ -65,6 +65,16 @@ class Database {
         this.collectionName = collectionName;
     }
 
+    updateOne(filter, data) {
+        const collection = db.collection(this.collectionName);
+        return collection.updateOne(filter, data, { writeConcern: true });
+    }
+
+    deleteOne(filter) {
+        const collection = db.collection(this.collectionName);
+        return collection.deleteOne(filter)
+    }
+
 }
 
 module.exports = Database;

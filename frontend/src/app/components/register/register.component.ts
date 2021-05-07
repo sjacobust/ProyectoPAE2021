@@ -67,9 +67,11 @@ export class RegisterComponent implements OnInit {
         name: this.form.controls.name.value + " " + this.form.controls.lastname.value,
         email: this.form.controls.email.value,
         telephone: this.form.controls.telephone.value,
-        password: this.form.controls.password.value
+        password: this.form.controls.password.value,
+        token: "",
+        expire_date: ""
       }
-      this.userService.signUp(this.registerInfo).then((resolve) => {
+      this.userService.signUp(this.registerInfo).then((result) => {
         this.router.navigate(['home'], { queryParams: { registered: 'true' } });
       });
     } else {
