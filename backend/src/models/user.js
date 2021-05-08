@@ -23,6 +23,11 @@ class Users extends Database {
     });
   }
 
+  update(user) {
+    console.log("Update", user);
+    return this.updateOne(user);
+  }
+
 }
 
 module.exports = new Users();

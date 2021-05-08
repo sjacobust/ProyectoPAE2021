@@ -7,6 +7,10 @@ class Dishes extends Database {
     super();
     this.useCollection('dishes');
   }
+
+  getAllDishes(limit) {
+    return this.findAll(limit);
+  }
   
 }
 

@@ -23,6 +23,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="profile">Perfil</a>
+          <a class="dropdown-item" href="admin" *ngIf="user.isAdmin">Administrador</a>
           <a class="dropdown-item" (click)="logout()">Cerrar Sesión</a>
         </div>
       </li>

@@ -1,4 +1,5 @@
 const MongoClient = require("mongodb").MongoClient;
+const ObjectID = require('mongodb').ObjectID;
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -46,13 +47,12 @@ class Database {
 
     find(filters, limit, cb) {
         const collection = db.collection(this.collectionName);
-        limit = limit || 30;
         return collection.find(filters).limit(limit).toArray(cb);
     }
 
     findAll(limit, cb) {
         const collection = db.collection(this.collectionName);
-        limit = limit || 30;
+        limit = 30;
         return collection.find({}).limit(limit).toArray(cb);
     }
 
@@ -65,9 +65,10 @@ class Database {
         this.collectionName = collectionName;
     }
 
-    updateOne(filter, data) {
+    updateOne(data) {
+        console.log("Database Update", data);
         const collection = db.collection(this.collectionName);
-        return collection.updateOne(filter, data, { writeConcern: true });
+        return collection.updateOne({ _id: ObjectID(data._id) }, {$set: data});
     }
 
     deleteOne(filter) {

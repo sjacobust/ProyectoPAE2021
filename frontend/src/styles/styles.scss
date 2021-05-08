@@ -36,3 +36,7 @@ app-root {
     @include bodoni-font;
 }
 
+.ng-invalid.ng-dirty {
+    border-color: red;
+}
+

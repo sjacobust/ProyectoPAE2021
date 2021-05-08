@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth.service';
 export class AuthGuard implements CanActivate{
 
   userLoggedIn: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {
     this.authService.loginStatus.subscribe(flag => {
@@ -20,11 +21,15 @@ export class AuthGuard implements CanActivate{
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    if (!this.userLoggedIn) {
-      this.router.navigate(['login'], { queryParams: { redirected: 'true' } });
+    if (this.userLoggedIn && (route.url[0].path === 'login' || route.url[0].path === 'register')) {
+      this.router.navigate(['profile']);
       return false;
+    } else if (!this.userLoggedIn && route.url[0].path === 'profile') {
+      this.router.navigate(['login']);
+      return false;
+    } else if (!this.isAdmin && route.url[0].path === 'admin') {
+      this.router.navigate(['not-auth']);
     }
-
     return true;
   }
 

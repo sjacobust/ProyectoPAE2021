@@ -65,11 +65,45 @@ const getAllUsers = (req, res, next) => {
   */
  router.get('/users', UsersController.getOne);
 
+ // Users
+ /**
+  * @swagger
+  * /users:
+  *  put:
+  *    description: Usuario
+  *    parameters:
+  *      - in: body
+  *        name: userUpdate
+  *        description: La información del usuario actualizada
+  *        schema: 
+  *          type: object
+  *          properties:
+  *            name:
+  *              type: string
+  *            email:
+  *              type: string
+  *            telephone:
+  *              type: string
+  *            password:
+  *              type: string
+  *          required:
+  *            - name
+  *            - email
+  *            - telephone
+  *            - password
+  *    responses:
+  *      200:
+  *        description: Mensaje de actualización lograda
+  *      404:
+  *        description: No existe el usuario
+  */
+ router.put('/users', UsersController.getOne);
+
 
  /**
  * @swagger
  * /logout:
- *  post:
+ *  delete:
  *    description: Log Out
  *    parameters:
  *      - in: body

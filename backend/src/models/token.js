@@ -40,9 +40,14 @@ class Token extends DBModel {
   findUserByToken(token) {
     return new Promise((resolve, reject) => {
       this.findByToken(token).then(response => {
-        User.findById(response[0].userId).then(user => {
-          resolve(user);
-        })
+        if(response.length > 0) {
+          User.findById(response[0].userId).then(user => {
+            resolve(user);
+          })
+        } else {
+          reject(token);
+        }
+        
       })
     })
   }

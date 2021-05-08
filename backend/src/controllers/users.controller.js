@@ -54,7 +54,7 @@ class UserController {
         }
       }).catch(err => {
         console.log(err)
-        res.send("No token was received").status(400);
+        res.status(400).send({ message: "Token not Found, logging out" });
       });
     }
     
@@ -164,6 +164,7 @@ class UserController {
       email: req.body.email,
       telephone: req.body.telephone,
       password: hashedPassword,
+      addresses: [],
       isAdmin: false
     }
     users.insertOne(document).then(result => {
@@ -186,11 +187,41 @@ class UserController {
           console.error(err);
         });
       } else {
-        res.send("Already Logged Out / Not Logged In").status(400);
+        res.status(400).send("Already Logged Out / Not Logged In");
       }
     }).catch(err => {
       console.log(err)
-      res.send("No token was received").status(400);
+      res.status(400).send({ message: "Token not Found, logging out"});
+    });
+  }
+
+  addAddresses(req, res) {
+    token.findUserByToken(req.body.token).then(result => {
+      if(result.length > 0) {
+        console.log(result[0]);
+        result[0].addresses.push(req.body.address);
+        console.log(result[0]);
+        users.update(result[0]);
+        res.status(200).send({ message: "Address Added Successfully!"});
+      }
+    }).catch(err => {
+      res.status(400).send({ message: "Couldn't Find Token" });
+    });
+  }
+
+  updateAddress(req, res) {
+    token.findUserByToken(req.query.token).then(result => {
+
+    }).catch(err => {
+      res.status(400).send({ message: "Couldn't Find Token" });
+    });
+  }
+
+  deleteAddress(req, res) {
+    token.findUserByToken(req.query.token).then(result => {
+
+    }).catch(err => {
+      res.status(400).send({ message: "Couldn't Find Token" });
     });
   }
 

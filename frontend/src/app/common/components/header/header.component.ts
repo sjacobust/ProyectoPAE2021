@@ -23,6 +23,10 @@ export class HeaderComponent implements OnInit {
         const token = this.authService.getToken();
         this.userService.getUserByToken(token).then(result => {
           this.user = result[0];
+
+        }).catch(err => {
+          console.log("No Token, logging out", err);
+          this.logout();
         });
       }      
     });

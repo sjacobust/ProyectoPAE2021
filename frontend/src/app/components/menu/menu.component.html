@@ -1,16 +1,16 @@
-<div class="grid" *ngIf='menu.length > 0 else noMenu'>
+<div class="grid" *ngIf='weeklyMenu.length > 0 else noMenu'>
   <div class="grid-row">
     <div class="col-s-9 col-d-12 col-l-12 col-t-12 col-m-12">
       <div class="grid">
         <div class="grid-row">
-          <img src="{{menu[week].img}}" alt="Foto del Platillo" class="col-s-3 col-d-3 col-t-3 col-m-6">
+          <img src="{{weeklyMenu[week].img}}" alt="Foto del Platillo" class="col-s-3 col-d-3 col-t-3 col-m-6" *ngIf="weeklyMenu[week].img">
           <div class="col-s-9 col-d-9 col-t-6 col-m-12 grid">
             <div class="grid-row">
               <div class="col-s-6 col-d-6 col-m-12">
                 <div class="grid">
                   <div class="grid-row">
                     <div class="col-s-12 col-d-12">
-                      <h2>{{menu[week].dish}}</h2>
+                      <h2>{{weeklyMenu[week].dish}}</h2>
                     </div>
                   </div>
                   <div class="grid-row">
@@ -20,7 +20,7 @@
                   </div>
                   <div class="grid-row">
                     <div class="col-s-12 col-d-12">
-                      <p>{{menu[week].description}}</p>
+                      <p>{{weeklyMenu[week].description}}</p>
                     </div>
                   </div>
                 </div>
@@ -34,7 +34,7 @@
                   </div>
                   <div class="grid-row">
                     <div class="col-s-12 col-d-12 col-t-12 col-m-12">
-                      <p class="price">${{menu[week].price}}.00 MXN</p>
+                      <p class="price">${{weeklyMenu[week].price}}.00 MXN</p>
                     </div>
                   </div>
                   <div class="grid-row">
@@ -50,7 +50,7 @@
       </div>
     </div>
     <hr class="verticalHr">
-    <div class="col-s-3 next-week-grid" *ngIf="menu[week + 1] else noDish">
+    <div class="col-s-3 next-week-grid" *ngIf="weeklyMenu[week + 1] else noDish">
       <div class="grid">
         <div class="grid-row">
           <div class="col-s-12">
@@ -59,12 +59,12 @@
         </div>
         <div class="grid-row">
             <div class="col-s-12">
-              <h4>{{menu[week + 1].dish}}</h4>
+              <h4>{{weeklyMenu[week + 1].dish}}</h4>
             </div>
         </div>
         <div class="grid-row">
             <div class="col-s-12">
-              <p>{{menu[week + 1].description}}</p>
+              <p>{{weeklyMenu[week + 1].description}}</p>
             </div>
         </div>
       </div>
@@ -75,10 +75,10 @@
 
 
 <ng-template #noDish>
-  <div class="col-s-3 grid next-week-grid">
+  <div class="col-s-3 next-week-grid">
     <div class="grid">
       <div class="grid-row">
-        <div class="col-d-12">
+        <div class="col-s-12 col-d-12">
           <h3>Sorpréndete la próxima semana</h3>
         </div>
       </div>

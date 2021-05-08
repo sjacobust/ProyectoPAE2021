@@ -8,22 +8,39 @@ import { MenuService } from '../../common/services/menu.service';
 })
 export class MenuComponent implements OnInit {
 
-  menu:any[] = []
-  week:number = 0;
+  menu: any[] = [{
+    name: "",
+    description: "",
+    price: "",
+    weekly_dish: {
+      chosen: false,
+      week: 0
+    }
+  }]
+  week: number = 0;
+  weeklyMenu:any = [{
+    name: "",
+    description: "",
+    price: "",
+    img: "",
+  }];
 
 
-  constructor(private menuService:MenuService) { 
+  constructor(private menuService: MenuService) {
     console.log(menuService);
     this.menuService = menuService;
   }
 
   ngOnInit(): void {
-    
-    let date:Date = this.getTodaysDate();
+
+    let date: Date = this.getTodaysDate();
     this.week = this.getWeekOfMonth(date);
-    console.log(this.week);
     this.menuService.getDishes().then(response => {
       this.menu = response;
+      for(let i = 0; i < this.menu.length; i++){
+        if(this.menu[i].weekly_dish.chosen)
+        this.weeklyMenu[this.menu[i].weekly_dish.week] = this.menu[i];
+      }
     });
   }
 
@@ -34,7 +51,7 @@ export class MenuComponent implements OnInit {
   }
 
   getTodaysDate() {
-    let date:Date = new Date();
+    let date: Date = new Date();
     let dd = String(date.getDate()).padStart(2, '0');
     let mm = String(date.getMonth() + 1).padStart(2, '0');
     let yyyy = date.getFullYear();
@@ -42,6 +59,6 @@ export class MenuComponent implements OnInit {
     return date;
   }
 
-  
+
 
 }

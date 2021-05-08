@@ -1,9 +1,9 @@
-const Token = require('./../models/');
+const { token } = require('./../models/');
 
 
 const authMiddleware = (req, res, next) => {
 
-    Token.findByToken(req.headers.authorization).then(response => {
+    token.findByToken(req.headers.authorization).then(response => {
       if(response) {
         next();
       } else {

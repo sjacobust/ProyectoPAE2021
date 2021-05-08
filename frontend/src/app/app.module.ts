@@ -20,6 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { NotAuthorizedComponent } from './common/components/not-authorized/not-authorized.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     TaquizaComponent,
     DishesComponent,
     ProfileComponent,
+    AdminComponent,
+    NotAuthorizedComponent,
   ],
   imports: [
     BrowserModule,

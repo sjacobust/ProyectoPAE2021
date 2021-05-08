@@ -1,1 +1,16 @@
-<p>dishes works!</p>
+<div class="grid" *ngIf="menuLength > 0">
+    <div class="grid-row" *ngFor="let dish of menu">
+        <div class="col-s-3">
+            <p>{{dish.name}}</p>
+        </div>
+        <div class="col-s-5">
+            <p>{{dish.description}}</p>
+        </div>
+        <div class="col-s-2">
+            <p>${{dish.price}}.00 MXN</p>
+        </div>
+        <div class="col-s-2">
+            <button class="btn btn-success"><i class="fas fa-cart-plus"></i></button>
+        </div>
+    </div>
+</div>
