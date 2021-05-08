@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -11,12 +14,30 @@ export class HeaderComponent implements OnInit {
   user:any = "";
   userIsLoggedIn:boolean = false;
 
-  constructor() { }
+  constructor(private authService:AuthService, private router:Router, private userService:UserService) { }
 
   ngOnInit(): void {
-    if(this.user) {
-      this.userIsLoggedIn = true;
-    }
+    this.authService.loginStatus.subscribe(flag => {
+      this.userIsLoggedIn = flag;
+      if(flag){
+        const token = this.authService.getToken();
+        this.userService.getUserByToken(token).then(result => {
+          this.user = result[0];
+
+        }).catch(err => {
+          console.log("No Token, logging out", err);
+          this.logout();
+        });
+      }      
+    });
+  }
+
+  logout() {
+    const token = this.authService.getToken();
+    this.userService.logout(token).subscribe(data => {
+      this.authService.logout();
+      this.router.navigate(['login']);
+    });
   }
 
 }

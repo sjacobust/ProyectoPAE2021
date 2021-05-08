@@ -14,16 +14,17 @@
         <a class="nav-link" href="about-us">Acerca de Nosotros</a>
       </li>
       <li class="nav-item">
-        <a href="menu" class="nav-link">Menú</a>
+        <a href="products" class="nav-link">Menú</a>
       </li>
-      <li class="nav-item dropdown" *ngIf="userIsLoggedIn; else loginDropdown">
+      <li class="nav-item dropdown" *ngIf="userIsLoggedIn else loginDropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           {{user.name}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Perfil</a>
-          <a class="dropdown-item" href="#">Cerrar Sesión</a>
+          <a class="dropdown-item" href="profile">Perfil</a>
+          <a class="dropdown-item" href="admin" *ngIf="user.isAdmin">Administrador</a>
+          <a class="dropdown-item" (click)="logout()">Cerrar Sesión</a>
         </div>
       </li>
     </ul>

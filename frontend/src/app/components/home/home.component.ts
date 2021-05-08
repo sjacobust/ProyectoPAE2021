@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,12 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   description:string = "";
+  infoMessage:string = "";
 
-  constructor() { }
+  constructor(private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     console.log("Arrived at Home");
-
+    this.route.queryParams.subscribe(params => {
+      if(params.registered !== undefined && params.registered === 'true') {
+          this.infoMessage = 'Gracias por unirte a Casa Amet! Por Favor Inicia Sesión!';
+      }
+    });
   }
 
 }

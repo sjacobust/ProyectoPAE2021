@@ -1,0 +1,53 @@
+@import '../../../styles/sass/variables';
+@import '../../../styles/sass/mixins';
+
+button {
+    background-color: $accent-color;
+    color: white;
+}
+
+p {
+    text-align: justify;
+}
+
+.price {
+    text-align: center;
+}
+
+button:hover {
+    background-color: $primary-color;
+    color: white;    
+}
+
+img {
+    object-fit: contain;
+}
+
+.grid {
+    background-color: $white-color;
+    width: 100%;
+}
+
+.no-menu {
+    text-align: center;
+}
+
+@each $device, $pixels in $devices {
+    @media (max-width: $pixels) {
+        @if $pixels > 480px {
+            .grid .grid-row {
+                display: flex;
+            }
+        } @else {
+            .grid .grid-row {
+                display: block;
+            }
+        }
+        @if $pixels >= 1200px {
+            .next-week-grid, .verticalHr {
+                display: none;
+            }
+        }
+    }
+    
+}

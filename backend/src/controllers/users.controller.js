@@ -1,30 +1,36 @@
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
-const db = require('./db.controller');
-if(process.env.NODE_ENV==='dev') {
+if (process.env.NODE_ENV === 'dev') {
   require('dotenv').config();
 }
-const Token = require('./../models/token');
-const User = require('./../models/user');
+const {
+  users,
+  token
+} = require("./../models");
 
-const { OAuth2Client } = require('google-auth-library');
+const {
+  OAuth2Client
+} = require('google-auth-library');
+const {
+  type
+} = require('os');
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 function getHashedPassword(pwd) {
   let hashedPassword;
-  if(process.env.ENCRYPT === 'bcrypt') {
+  if (process.env.ENCRYPT === 'bcrypt') {
     hashedPassword = bcrypt.hashSync(pwd, 12);
   } else {
-    hashedPassword = crypto.scryptSync(pwd,'salt', 24).toString('hex');
+    hashedPassword = crypto.scryptSync(pwd, 'salt', 24).toString('hex');
   }
-  
+
   return hashedPassword;
 }
 
 class UserController {
 
   index(req, res) {
-    User.find({}).then(results => {
+    users.find({}).then(results => {
       res.send(results);
     }).catch(err => {
       console.log('Error usuarios: ', err);
@@ -33,33 +39,47 @@ class UserController {
   }
 
   getOne(req, res) {
-    User.findOne({
-      email: req.query.email
-    }).then(result => {
-      res.send(result);
-    }).catch(err => {
-      res.status(400).send(err);
-    })
+    if(req.query.email) {
+      users.findOne({
+        email: req.query.email
+      }).then(result => {
+        res.send(result);
+      }).catch(err => {
+        res.status(400).send(err);
+      })
+    } else if (req.query.token) {
+      token.findUserByToken(req.query.token).then(result => {
+        if(result) {
+          res.send(result).status(200);
+        }
+      }).catch(err => {
+        console.log(err)
+        res.status(400).send({ message: "Token not Found, logging out" });
+      });
+    }
+    
   }
 
   login(req, res) {
     const hashedPassword = getHashedPassword(req.body.password);
-    
-    User.validate(req.body.email, hashedPassword).then(result => {
+    users.validate(req.body.email, hashedPassword).then(result => {
       console.log('Result usuario', result);
-      if(result) {
-        Token.create(result._id).then(tokenResult => {
+      if (result) {
+        token.create(result[0]._id.toString()).then(tokenResult => {
           console.log('Created token: ', tokenResult);
+          console.log("Got to token result");
           res.send(tokenResult.ops[0]);
         }).catch(err => {
+          console.log("Failed to token result");
           console.log('Failed to create token', err);
           res.status(404).send();
         });
       } else {
-        res.status(400).send();
+        res.status(400).send("Token not Created");
       }
     }).catch(err => {
-      res.status(400).send();
+      console.log("Failed to token result", err);
+      res.status(400).send(err);
     })
   }
 
@@ -70,20 +90,20 @@ class UserController {
     }).then(googleResponse => {
       const responseData = googleResponse.getPayload();
       const email = responseData.email;
-      User.findOne({
+      users.findOne({
         email: email
       }).then(response => {
-        if(response) {
+        if (response) {
           console.log('Found user: ', response);
-          if(!response.googleId) {
+          if (!response.googleId) {
             console.log('Does not have google ID');
-            User.updateOne({
+            users.updateOne({
               email: email
             }, {
               $set: {
                 googleId: req.body.id
               }
-            }).then(() =>{
+            }).then(() => {
               UserController.createToken(response._id, res);
             }).catch(err => {
               console.log('Failed to update user', err);
@@ -94,7 +114,7 @@ class UserController {
           }
         } else {
           // Crear
-          User.create({
+          users.create({
             name: req.body.name,
             email: email,
             googleId: req.body.id
@@ -111,14 +131,14 @@ class UserController {
   }
 
   login2(req, res) {
-    db('users').then(collection => {
+    users.then(collection => {
       const hashedPassword = getHashedPassword(req.body.password);
       collection.findOne({
-        email:req.body.email,
-        password:hashedPassword
+        email: req.body.email,
+        password: hashedPassword
       }).then(results => {
-        if(results) {
-          Token.create(results._id).then(result => {
+        if (results) {
+          token.create(results._id).then(result => {
             console.log('Created token: ', result);
             res.send(result.ops);
           }).catch(err => {
@@ -138,34 +158,73 @@ class UserController {
   }
 
   signup(req, res) {
-    db('users').then(collection => {
-      const hashedPassword = getHashedPassword(req.body.password);
-      collection.insertOne({
-        name: req.body.name,
-        email:req.body.email,
-        password:hashedPassword
-      }).then(result => {
-        res.send(result);
-      }).catch(err => {
-        console.log('Error: ', err);
-        res.status(400).send(err);
-      });
+    const hashedPassword = getHashedPassword(req.body.password);
+    const document = {
+      name: req.body.name,
+      email: req.body.email,
+      telephone: req.body.telephone,
+      password: hashedPassword,
+      addresses: [],
+      isAdmin: false
+    }
+    users.insertOne(document).then(result => {
+      res.send(result);
     }).catch(err => {
-      console.log('Error', err);
+      console.log('Error: ', err);
       res.status(400).send(err);
     })
   }
 
-  static createToken(userId, res) {
-    console.log('Will create token now');
-    Token.create(userId).then(tokenResult => {
-      console.log('Created token: ', tokenResult);
-      res.send(tokenResult.ops[0]);
+  logout(req, res) {
+    console.log(req.params.token);
+    token.findByToken(req.params.token).then(result => {
+      console.log(result);
+      if(result) {
+        token.deleteToken(req.params.token).then(result => {
+          res.end().status(200);
+        }).catch(err => {
+          console.log("Couldn't delete Token");
+          console.error(err);
+        });
+      } else {
+        res.status(400).send("Already Logged Out / Not Logged In");
+      }
     }).catch(err => {
-      console.log('Failed to create token', err);
-      res.status(404).send(err);
-    })
+      console.log(err)
+      res.status(400).send({ message: "Token not Found, logging out"});
+    });
   }
+
+  addAddresses(req, res) {
+    token.findUserByToken(req.body.token).then(result => {
+      if(result.length > 0) {
+        console.log(result[0]);
+        result[0].addresses.push(req.body.address);
+        console.log(result[0]);
+        users.update(result[0]);
+        res.status(200).send({ message: "Address Added Successfully!"});
+      }
+    }).catch(err => {
+      res.status(400).send({ message: "Couldn't Find Token" });
+    });
+  }
+
+  updateAddress(req, res) {
+    token.findUserByToken(req.query.token).then(result => {
+
+    }).catch(err => {
+      res.status(400).send({ message: "Couldn't Find Token" });
+    });
+  }
+
+  deleteAddress(req, res) {
+    token.findUserByToken(req.query.token).then(result => {
+
+    }).catch(err => {
+      res.status(400).send({ message: "Couldn't Find Token" });
+    });
+  }
+
 }
 
 module.exports = new UserController();

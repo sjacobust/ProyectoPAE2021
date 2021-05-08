@@ -1,13 +1,13 @@
 const crypto = require('crypto');
-const db = require('./../controllers/db.controller');
-const DBModel = require('./db');
+const DBModel = require('./database');
 
 const User = require('./user');
 
 class Token extends DBModel {
 
   constructor() {
-    super('tokens');
+    super();
+    this.useCollection("tokens");
   }
 
   validate(token, userId) {
@@ -24,29 +24,36 @@ class Token extends DBModel {
     const expire_date = date.setHours(date.getHours()+1);
     const token = crypto.scryptSync(userId + new Date().getTime(),'salt', 48).toString('hex');
 
-    return super.create({
+    return this.insertOne({
       userId: userId,
       token: token,
-      expire_date: expire_date
+      createdAt: new Date()
     }, {timestamps:false});
   }
 
   findByToken(token) {
-    const now = new Date().getTime();
     return this.findOne({
-      token:token,
-      expire_date: { $gt: now }
+      token: token
     });
   }
 
   findUserByToken(token) {
     return new Promise((resolve, reject) => {
       this.findByToken(token).then(response => {
-        User.findById(response.userId).then(user => {
-          resolve(user);
-        })
+        if(response.length > 0) {
+          User.findById(response[0].userId).then(user => {
+            resolve(user);
+          })
+        } else {
+          reject(token);
+        }
+        
       })
     })
+  }
+
+  deleteToken(token){
+    return this.deleteOne({token: token});
   }
 }
 
