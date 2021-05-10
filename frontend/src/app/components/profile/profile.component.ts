@@ -49,12 +49,18 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  deleteAddress() {
+  deleteAddress(userAddress:any) {
+    this.addressService.deleteAddress(userAddress, this.authService.getToken()).then(result => {
+      location.reload();
+    }).catch(err => {
+      console.log('No se pudo borrar la Dirección');
+      console.log(err);
+    });
 
   }
 
-  editAddress() {
-
+  editAddress(userAddress:any) {
+    
   }
 
 }

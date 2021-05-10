@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { MenuService } from 'src/app/common/services/menu.service';
 
 @Component({
   selector: 'app-products',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
 
-  constructor() { }
+  menu: any = [];
+
+  constructor(private menuService: MenuService) {
+    
+  }
 
   ngOnInit(): void {
+    this.menuService.getDishes().then(result => {
+      console.log(result)
+      this.menu = result;
+    });
   }
 
 }

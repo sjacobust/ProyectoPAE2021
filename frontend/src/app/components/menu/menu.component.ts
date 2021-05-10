@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MenuService } from '../../common/services/menu.service';
 
 @Component({
@@ -6,42 +6,35 @@ import { MenuService } from '../../common/services/menu.service';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnChanges {
 
-  menu: any[] = [{
-    name: "",
-    description: "",
-    price: "",
-    weekly_dish: {
-      chosen: false,
-      week: 0
-    }
-  }]
+  @Input() menu: any;
   week: number = 0;
-  weeklyMenu:any = [{
-    name: "",
-    description: "",
-    price: "",
-    img: "",
-  }];
+  weeklyMenu: any = [];
 
 
   constructor(private menuService: MenuService) {
-    console.log(menuService);
     this.menuService = menuService;
   }
 
   ngOnInit(): void {
 
-    let date: Date = this.getTodaysDate();
-    this.week = this.getWeekOfMonth(date);
-    this.menuService.getDishes().then(response => {
-      this.menu = response;
-      for(let i = 0; i < this.menu.length; i++){
-        if(this.menu[i].weekly_dish.chosen)
-        this.weeklyMenu[this.menu[i].weekly_dish.week] = this.menu[i];
-      }
-    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+    console.log(changes);
+
+    // if (this.parentMenu) {
+    //   console.log(this.parentMenu)
+    //   let menu = this.parentMenu;
+    //   let date: Date = this.getTodaysDate();
+    //   this.week = this.getWeekOfMonth(date);
+    //   for (let i = 0; i < menu.length; i++) {
+    //     if (menu[i].weekly_dish.chosen)
+    //       this.weeklyMenu[menu[i].weekly_dish.week] = menu[i];
+    //   }
+    // }
   }
 
   getWeekOfMonth(date: Date) {

@@ -13,12 +13,12 @@ export class AddressService {
 
   }
 
-  deleteAddress(address:any):Promise<any> {
-    return this.httpClient.delete(this.url + `?${address}`).toPromise();
+  deleteAddress(address:any, token:any):Promise<any> {
+    return this.httpClient.delete(this.url + `?address=${address}&token=${token}`).toPromise();
   }
 
-  updateAddress(address:any):Promise<any> {
-    return this.httpClient.put(this.url + `?${address}`, address).toPromise();
+  updateAddress(address:any, token:any):Promise<any> {
+    return this.httpClient.put(this.url + `?address=${address}&token=${token}`, address).toPromise();
   }
 
   addAddress(address:any):Promise<any> {

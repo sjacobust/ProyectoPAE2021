@@ -1,1 +1,16 @@
-<p>ingredients works!</p>
+<div class="grid" *ngIf="ingredients.length > 0">
+    <div class="grid-row" *ngFor="let ingredients of ingredients.length">
+        <div class="col-s-3">
+            <p>{{ingredients.name}}</p>
+        </div>
+        <div class="col-s-5">
+            <p>{{ingredients.description}}</p>
+        </div>
+        <div class="col-s-2">
+            <p>${{ingredients.price}}.00 MXN</p>
+        </div>
+        <div class="col-s-2">
+            <button class="btn btn-success"><i class="fas fa-cart-plus"></i></button>
+        </div>
+    </div>
+</div>

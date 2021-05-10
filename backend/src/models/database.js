@@ -2,7 +2,9 @@ const MongoClient = require("mongodb").MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const dotenv = require('dotenv');
 
-dotenv.config();
+if (process.env.NODE_ENV === 'dev') {
+    dotenv.config();
+}
 
 const mongoUrl = process.env.MONGO_URL;
 

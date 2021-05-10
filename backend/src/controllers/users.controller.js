@@ -39,7 +39,7 @@ class UserController {
   }
 
   getOne(req, res) {
-    if(req.query.email) {
+    if (req.query.email) {
       users.findOne({
         email: req.query.email
       }).then(result => {
@@ -49,15 +49,17 @@ class UserController {
       })
     } else if (req.query.token) {
       token.findUserByToken(req.query.token).then(result => {
-        if(result) {
+        if (result) {
           res.send(result).status(200);
         }
       }).catch(err => {
         console.log(err)
-        res.status(400).send({ message: "Token not Found, logging out" });
+        res.status(400).send({
+          message: "Token not Found, logging out"
+        });
       });
     }
-    
+
   }
 
   login(req, res) {
@@ -179,7 +181,7 @@ class UserController {
     console.log(req.params.token);
     token.findByToken(req.params.token).then(result => {
       console.log(result);
-      if(result) {
+      if (result) {
         token.deleteToken(req.params.token).then(result => {
           res.end().status(200);
         }).catch(err => {
@@ -191,21 +193,27 @@ class UserController {
       }
     }).catch(err => {
       console.log(err)
-      res.status(400).send({ message: "Token not Found, logging out"});
+      res.status(400).send({
+        message: "Token not Found, logging out"
+      });
     });
   }
 
   addAddresses(req, res) {
     token.findUserByToken(req.body.token).then(result => {
-      if(result.length > 0) {
+      if (result.length > 0) {
         console.log(result[0]);
         result[0].addresses.push(req.body.address);
         console.log(result[0]);
         users.update(result[0]);
-        res.status(200).send({ message: "Address Added Successfully!"});
+        res.status(200).send({
+          message: "Address Added Successfully!"
+        });
       }
     }).catch(err => {
-      res.status(400).send({ message: "Couldn't Find Token" });
+      res.status(400).send({
+        message: "Couldn't Find Token"
+      });
     });
   }
 
@@ -213,15 +221,29 @@ class UserController {
     token.findUserByToken(req.query.token).then(result => {
 
     }).catch(err => {
-      res.status(400).send({ message: "Couldn't Find Token" });
+      res.status(400).send({
+        message: "Couldn't Find Token"
+      });
     });
   }
 
   deleteAddress(req, res) {
     token.findUserByToken(req.query.token).then(result => {
-
+      if (result.length > 0) {
+        console.log(result[0]);
+        if (req.query.address) {
+          result[0].addresses.pop(req.query.address);
+          console.log(result[0]);
+          users.update(result[0]);
+        }
+        res.status(200).send({
+          message: "Address Removed Successfully!"
+        });
+      }
     }).catch(err => {
-      res.status(400).send({ message: "Couldn't Find Token" });
+      res.status(400).send({
+        message: "Couldn't Find Token"
+      });
     });
   }
 
