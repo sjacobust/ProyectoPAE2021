@@ -38,15 +38,15 @@
         </div>
         <div class="grid-row" *ngIf="user.addresses else noAddresses">
           <div class="col-s-12 grid">
-            <div class="grid-row" *ngFor="let address of user.addresses; let i = index" [attr.data-index]="i">
-              <div class="col-s-10">
-                <p #addressToDelete><b>{{i + 1}}.</b> {{address}}</p>
+            <div class="grid-row" *ngFor="let userAddress of user.addresses; let i = index" [attr.data-index]="i">
+              <div class="col-s-8">
+                <p #addressToDelete><b>{{i + 1}}.</b> {{userAddress}}</p>
               </div>
-              <div class="col-s-1">
-                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteAddress"><i class="fas fa-trash-alt" ></i></button>
+              <div class="col-s-2">
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteAddress" (click)="deleteAddress(userAddress)"><i class="fas fa-trash-alt" ></i></button>
               </div>
-              <div class="col-s-1">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#editAddress"><i class="fas fa-edit"></i></button>
+              <div class="col-s-2">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#editAddress" (click)="editAddress(userAddress)"><i class="fas fa-edit"></i></button>
               </div>
             </div>
           </div>
@@ -131,103 +131,6 @@
           </div>
         </div>
     </form>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="editAddress" tabindex="-1" aria-labelledby="editAddress" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editAddress">Añade una Dirección</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form (submit)="editAddress()">
-        <div class="modal-body">
-          <div class="grid">
-            <div class="grid-row">
-              <div class="col-s-6">
-                <label for="addressLine1">Dirección renglón #1:</label>
-              </div>
-              <div class="col-s-6">
-                <input type="text" name="addressLine1" id="addressLine1" placeholder="Dirección #1" [(ngModel)]="address.dir1" class="form-control">
-              </div>
-            </div>
-            <div class="grid-row">
-              <div class="col-s-6">
-                <label for="addressLine1">Dirección renglón #2:</label>
-              </div>
-              <div class="col-s-6">
-                <input type="text" name="addressLine2" id="addressLine1" placeholder="Dirección #2" [(ngModel)]="address.dir2" class="form-control">
-              </div>
-            </div>
-            <div class="grid-row">
-              <div class="col-s-6">
-                <label for="addressLine1">Código Postal:</label>
-              </div>
-              <div class="col-s-6">
-                <input type="text" name="zipCode" id="zipCode" placeholder="Código Postal" [(ngModel)]="address.zipCode" class="form-control">
-              </div>
-            </div>
-            <div class="grid-row">
-              <div class="col-s-6">
-                <label for="addressLine1">Ciudad:</label>
-              </div>
-              <div class="col-s-6">
-                <input type="text" name="city" id="city" placeholder="Ciudad" [(ngModel)]="address.city" class="form-control">
-              </div>
-            </div>
-            <div class="grid-row">
-              <div class="col-s-6">
-                <label for="addressLine1">Estado:</label>
-              </div>
-              <div class="col-s-6">
-                <select id="states" name="states" placeholder="Elige el estado" class="form-control" [(ngModel)]="address.state">
-                    <option class="form-control" value="{{state.name}}" name="state" *ngFor="let state of states" >{{state.name}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="grid-row">
-              <div class="col-s-6"><button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button></div>
-              <div class="col-s-6"><button class="btn btn-primary">Guardar</button></div>
-            </div>
-          </div>
-        </div>
-    </form>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="deleteAddress" tabindex="-1" aria-labelledby="deleteAddress" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteAddress">Borrar la Dirección</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="grid">
-          <div class="grid-row">
-            <div class="col-s-12">
-              <p>Estás segure de querer borrar esta dirección</p>
-            </div>
-          </div>
-          <div class="grid-row">
-            <div class="col-s-12">
-              <p>{{addressToDelete}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button class="btn btn-danger">Borrar</button>
-      </div>
     </div>
   </div>
 </div>

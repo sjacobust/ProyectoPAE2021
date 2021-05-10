@@ -1,4 +1,4 @@
-<div class="grid" *ngIf="menuLength > 0">
+<div class="grid" *ngIf="menu.length > 0 else NoDishes">
     <div class="grid-row" *ngFor="let dish of menu">
         <div class="col-s-3">
             <p>{{dish.name}}</p>
@@ -14,3 +14,12 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #NoDishes>
+    <div class="grid-row">
+        <div class="col-s-3">
+            <p><b>No hay platillos en registro</b></p>
+        </div>
+    </div>
+</ng-template>

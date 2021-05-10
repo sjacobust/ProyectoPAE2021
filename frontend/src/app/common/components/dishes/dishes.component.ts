@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 
 @Component({
@@ -8,17 +8,18 @@ import { MenuService } from '../../services/menu.service';
 })
 export class DishesComponent implements OnInit {
 
-  menu:any;
+  @Input() menu:any;
   menuLength:any = 0;
 
-  constructor(private menuService:MenuService) { }
+  constructor(private menuService:MenuService) {
+    this.menuService.getDishes().then(result => {
+      console.log(result)
+      this.menu = result;
+    });
+  }
 
   ngOnInit(): void {
-    this.menuService.getDishes().then(result => {
-      console.log(result);
-      this.menu = result;
-      this.menuLength = this.menu.length;
-    })
+    
   }
 
 }

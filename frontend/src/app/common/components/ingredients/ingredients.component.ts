@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IngredientsComponent implements OnInit {
 
+
+  ingredients:any;
+
   constructor() { }
 
   ngOnInit(): void {
