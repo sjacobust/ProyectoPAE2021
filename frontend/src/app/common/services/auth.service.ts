@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
 
   tokenUrl:string = environment.apiUrl + "/auth";
 
-  constructor() {
+  constructor(private userService:UserService) {
     this.loginStatus.next(this.isLoggedIn());
 
   }

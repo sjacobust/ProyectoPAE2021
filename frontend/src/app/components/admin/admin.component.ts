@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
+  userLength:number = 0;
+
   constructor() { }
 
   ngOnInit(): void {

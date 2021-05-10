@@ -14,7 +14,9 @@ const socketIo = require('socket.io');
 
 const { dishesRouter, ingredientsRouter, usersRouter, authRouter, addressesRouter } = require("./routes");
 
-dotenv.config();
+if (process.env.NODE_ENV) {
+    dotenv.config();
+}
 
 const port = process.env.PORT || 3000;
 
