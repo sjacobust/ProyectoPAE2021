@@ -38,16 +38,16 @@
     @media (max-width: $pixels) {
         @if $pixels <= 768px {
             .grid {
-                width: 100% !important;
+                width: 100%;
             }
             .grid .grid-row {
-                display: block !important;
-                text-align: center !important;
+                display: block;
+                text-align: center;
             }
         }
         @for $column from 1 through $max-columns {
             .grid-row .col-#{$device}-#{$column}{
-                width: getWidth($column, $max-columns) !important;
+                width: getWidth($column, $max-columns);
             }            
         }
     }

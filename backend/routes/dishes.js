@@ -3,6 +3,8 @@ const router = express.Router();
 
 const { DishesController } = require("./../src/controllers/");
 
+const { isAdminMiddleware } = require("./../src/middlewares/");
+
 /**
  * @swagger
  * /menu:
@@ -51,17 +53,21 @@ const { DishesController } = require("./../src/controllers/");
   router.post('/menu/weekly', DishesController.updateWeeklyMenu);
 
 
- /**
-  * @swagger
-  * /menu/weekly:
-  *  get:
-  *    description: Menu
-  *    responses:
-  *      200:
-  *        description: Se obtienen lso platillos que se asignaron a la semana.
-  */
-  router.get('/menu/weekly', DishesController.getWeeklyMenu);
-
-
+  /**
+   * @swagger
+   * /menu:
+   *  post:
+   *    description: Menu
+   *    parameters:
+   *      - in: query
+   *        name: Dishes
+   *        description: Objetos de los menu seleccionados por el usuario
+   *        schema:
+   *          type: object
+   *    responses:
+   *      200:
+   *        description: Se guardan los ingredientes seleccionados
+   */
+   router.delete('/menu', isAdminMiddleware, DishesController.deleteDish);
 
 module.exports = router;

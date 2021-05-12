@@ -12,7 +12,7 @@ export class AuthService {
 
   tokenUrl:string = environment.apiUrl + "/auth";
 
-  constructor(private userService:UserService) {
+  constructor() {
     this.loginStatus.next(this.isLoggedIn());
 
   }

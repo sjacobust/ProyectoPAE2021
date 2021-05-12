@@ -17,15 +17,24 @@ class Users extends Database {
     })
   }
 
+  findByEmail(username, password) {
+    return this.findOne({
+      email: username
+    })
+  }
+
   findById(userId) {
     return this.findOne({
       _id: ObjectID(userId)
     });
   }
 
-  update(user) {
-    console.log("Update", user);
+  updateUser(user) {
     return this.updateOne(user);
+  }
+
+  deleteUser(user) {
+    return this.deleteOne(user);
   }
 
 }

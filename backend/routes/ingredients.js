@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { IngredientsController } = require("./../src/controllers/");
+const { isAdminMiddleware } = require("./../src/middlewares");
  
  /**
  * @swagger
@@ -23,13 +24,31 @@ const { IngredientsController } = require("./../src/controllers/");
    *    parameters:
    *      - in: body
    *        name: Ingredientes
-   *        description: Objetos de los ingredientes seleccuionados por el usuario
+   *        description: Objetos de los ingredientes seleccionados por el usuario
    *        schema:
    *          type: object
    *    responses:
    *      200:
    *        description: Se guardan los ingredientes seleccionados
    */
-   router.post('/ingredients', IngredientsController.selectedIngredients);
+   router.post('/ingredients', isAdminMiddleware, IngredientsController.newIngredient);
+
+
+  /**
+   * @swagger
+   * /ingredients:
+   *  delete:
+   *    description: Ingredients
+   *    parameters:
+   *      - in: query
+   *        name: Ingredientes
+   *        description: Objetos de los ingredientes seleccionados por el usuario
+   *        schema:
+   *          type: object
+   *    responses:
+   *      200:
+   *        description: Se guardan los ingredientes seleccionados
+   */
+   router.delete('/ingredients', isAdminMiddleware, IngredientsController.deleteIngredient);
 
 module.exports = router;

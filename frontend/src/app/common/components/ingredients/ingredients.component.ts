@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IngredientService } from '../../services/ingredient.service';
 
 @Component({
   selector: 'app-ingredients',
@@ -7,12 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IngredientsComponent implements OnInit {
 
+  measurementOption:any= 0;
+  quantityOption:any = 0;
+  ingredients:any = [];
 
-  ingredients:any;
-
-  constructor() { }
+  constructor(private ingredientService:IngredientService) {
+    this.ingredientService.getIngredients(0).then(ingredients => {
+      this.ingredients = ingredients;
+    })
+   }
 
   ngOnInit(): void {
+  }
+
+  chosenMeasurement(event:any){
+    this.measurementOption = parseInt(event.target.value);
+  }
+
+  changedQuantity(event:any) {
+    this.quantityOption = parseInt(event.target.value); 
   }
 
 }

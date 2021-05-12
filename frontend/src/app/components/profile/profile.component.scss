@@ -1,3 +1,6 @@
+@import '../../../styles/sass/variables';
+@import '../../../styles/sass/mixins';
+
 .modal-body .grid {
     background-color: white;
 }
@@ -5,4 +8,14 @@
 
 label {
     text-align: right;
+}
+
+table {
+    background-color: $white-color;
+}
+
+.table-wrapper {
+    max-height: 50em;
+    overflow: auto;
+    display:inline-block;
 }

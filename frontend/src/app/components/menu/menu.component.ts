@@ -6,35 +6,33 @@ import { MenuService } from '../../common/services/menu.service';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnInit, OnChanges {
+export class MenuComponent implements OnInit {
 
-  @Input() menu: any;
+  menu: any;
   week: number = 0;
   weeklyMenu: any = [];
 
 
   constructor(private menuService: MenuService) {
-    this.menuService = menuService;
+
+    this.menuService.getDishes().then(results => {
+      this.menu = results;
+      if (this.menu) {
+        let date: Date = this.getTodaysDate();
+        this.week = this.getWeekOfMonth(date);
+        console.log(this.week);
+        for (let i = 0; i < this.menu.length; i++) {
+          if (this.menu[i].weekly_dish.chosen)
+            this.weeklyMenu.splice(this.menu[i].weekly_dish.week, 0, this.menu[i]);
+        }
+      }
+    })
+
+    
   }
 
   ngOnInit(): void {
 
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-
-    console.log(changes);
-
-    // if (this.parentMenu) {
-    //   console.log(this.parentMenu)
-    //   let menu = this.parentMenu;
-    //   let date: Date = this.getTodaysDate();
-    //   this.week = this.getWeekOfMonth(date);
-    //   for (let i = 0; i < menu.length; i++) {
-    //     if (menu[i].weekly_dish.chosen)
-    //       this.weeklyMenu[menu[i].weekly_dish.week] = menu[i];
-    //   }
-    // }
   }
 
   getWeekOfMonth(date: Date) {

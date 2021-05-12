@@ -4,7 +4,7 @@
     </div>
     <div class="grid-row">
         <div class="col-s-12 col-d-12">
-            <app-menu [menu]="menu"></app-menu>
+            <app-menu ></app-menu>
         </div>
     </div>
     <hr>
@@ -16,14 +16,15 @@
     </div>
     <hr>
     <div class="grid-row">
-        <div class="col-s-6 col-d-6 col-m-12 col-t-12">
+        <div class="col-s-12 col-d-12 col-m-12 col-t-12">
+            <h2>Platillos/Órdenes</h2>
+            <app-dishes></app-dishes>
+        </div>
+    </div>
+    <div class="grid-row">
+        <div class="col-s-12 col-d-12 col-m-12 col-t-12">
             <h2>Ingredientes/Insumos</h2>
             <app-ingredients></app-ingredients>
-        </div>
-        <hr class="verticalHr">
-        <div class="col-s-6 col-d-6 col-m-12 col-t-12">
-            <h2>Platillos/Órdenes</h2>
-            <app-dishes [menu]="menu"></app-dishes>
         </div>
     </div>
 </div>

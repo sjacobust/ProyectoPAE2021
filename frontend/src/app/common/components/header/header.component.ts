@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
@@ -11,12 +11,12 @@ import { UserService } from '../../services/user.service';
 export class HeaderComponent implements OnInit {
 
 
-  user:any = "";
+  user:any = {};
   userIsLoggedIn:boolean = false;
+  username:string = "";
+  isAdmin:boolean = false;
 
-  constructor(private authService:AuthService, private router:Router, private userService:UserService) { }
-
-  ngOnInit(): void {
+  constructor(private authService:AuthService, private router:Router, private userService:UserService) {
     this.authService.loginStatus.subscribe(flag => {
       this.userIsLoggedIn = flag;
       if(flag){
@@ -30,6 +30,10 @@ export class HeaderComponent implements OnInit {
         });
       }      
     });
+  }
+
+  ngOnInit(): void {
+    
   }
 
   logout() {

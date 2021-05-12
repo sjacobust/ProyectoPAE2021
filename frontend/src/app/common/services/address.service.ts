@@ -17,8 +17,8 @@ export class AddressService {
     return this.httpClient.delete(this.url + `?address=${address}&token=${token}`).toPromise();
   }
 
-  updateAddress(address:any, token:any):Promise<any> {
-    return this.httpClient.put(this.url + `?address=${address}&token=${token}`, address).toPromise();
+  updateAddress(oldAddress:any, newAddress:any, token:any):Promise<any> {
+    return this.httpClient.put(this.url + `?address=${oldAddress}&token=${token}`, newAddress).toPromise();
   }
 
   addAddress(address:any):Promise<any> {

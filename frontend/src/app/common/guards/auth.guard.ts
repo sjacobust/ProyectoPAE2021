@@ -12,10 +12,11 @@ export class AuthGuard implements CanActivate{
   userLoggedIn: boolean = false;
   isAdmin: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private userService:UserService, private router: Router) {
     this.authService.loginStatus.subscribe(flag => {
       this.userLoggedIn = flag;
     });
+    this.userService.isAdmin();
   }
 
   canActivate(
@@ -28,8 +29,23 @@ export class AuthGuard implements CanActivate{
     } else if (!this.userLoggedIn && route.url[0].path === 'profile') {
       this.router.navigate(['login']);
       return false;
-    } else if (!this.isAdmin && route.url[0].path === 'admin') {
-      this.router.navigate(['not-auth']);
+    } else if (route.url[0].path === 'admin') {
+      this.userService.getUserByToken(this.authService.getToken()).then(result => {
+        if(result) {
+          if(result[0].isAdmin) {
+            return true;
+          }
+          else {
+            this.router.navigate(['no-auth']);
+            return false;
+          }
+        }
+        this.router.navigate(['no-auth']);
+        return false;
+      }).catch(err => {
+        this.router.navigate(['no-auth']);
+        return false;
+      })
     }
     return true;
   }

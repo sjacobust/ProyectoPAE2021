@@ -38,7 +38,25 @@ class UserController {
     });
   }
 
-  getOne(req, res) {
+  getAll(req, res) {
+    if(req.query.admins && req.query.admins == 'true') {
+      users.find({ isAdmin: true }, 0).then(users => {
+        res.status(200).send(users);
+      }).catch(err => {
+        console.log(err);
+        res.status(404).send("No users found");
+      });
+    } else {
+      users.find({ isAdmin: false }, 0).then(users => {
+        res.status(200).send(users);
+      }).catch(err => {
+        console.log(err);
+        res.status(404).send("No users found");
+      });
+    }
+  }
+
+  getOne(req, res, next) {
     if (req.query.email) {
       users.findOne({
         email: req.query.email
@@ -58,8 +76,9 @@ class UserController {
           message: "Token not Found, logging out"
         });
       });
+    } else {
+      next()
     }
-
   }
 
   login(req, res) {
@@ -167,6 +186,7 @@ class UserController {
       telephone: req.body.telephone,
       password: hashedPassword,
       addresses: [],
+      cart: [],
       isAdmin: false
     }
     users.insertOne(document).then(result => {
@@ -219,9 +239,27 @@ class UserController {
 
   updateAddress(req, res) {
     token.findUserByToken(req.query.token).then(result => {
+      if (result.length > 0) {
+        console.log(result[0]);
+        if (req.query.address) {
+          const index = result[0].addresses.indexOf(req.query.address);
 
+          if (index > -1) {
+            result[0].addresses[index] = req.body.address;
+          }
+          console.log(result[0]);
+          users.update(result[0]);
+          res.status(200).send({
+            message: "Address Removed Successfully!"
+          });
+        } else {
+          res.status(400).send({
+            message: "Couldn't update address"
+          });
+        }
+      }
     }).catch(err => {
-      res.status(400).send({
+      res.status(404).send({
         message: "Couldn't Find Token"
       });
     });
@@ -232,19 +270,62 @@ class UserController {
       if (result.length > 0) {
         console.log(result[0]);
         if (req.query.address) {
-          result[0].addresses.pop(req.query.address);
+          
+          const index = result[0].addresses.indexOf(req.query.address);
+
+          if (index > -1) {
+            result[0].addresses.splice(index, 1);
+          }
           console.log(result[0]);
           users.update(result[0]);
+          res.status(200).send({
+            message: "Address Removed Successfully!"
+          });
+        } else {
+          res.status(400).send({
+            message: "Couldn't remove address"
+          });
         }
-        res.status(200).send({
-          message: "Address Removed Successfully!"
-        });
       }
     }).catch(err => {
       res.status(400).send({
         message: "Couldn't Find Token"
       });
     });
+  }
+
+  deleteUser(req, res) {
+    users.findByEmail(req.query.email).then(result => {
+      if (result.length > 0) {
+        console.log(result[0]);
+         users.deleteUser(result[0]).then(response => {
+          res.status(200).send("User removed");
+         });
+      }
+    }).catch(err => {
+      res.status(400).send({
+        message: "Couldn't Find Token"
+      });
+    });
+  }
+
+  addAdmin(req, res) {
+    const hashedPassword = getHashedPassword(req.body.password);
+    const document = {
+      name: req.body.name,
+      email: req.body.email,
+      telephone: req.body.telephone,
+      password: hashedPassword,
+      addresses: [],
+      cart: [],
+      isAdmin: true
+    }
+    users.insertOne(document).then(result => {
+      res.send(result);
+    }).catch(err => {
+      console.log('Error: ', err);
+      res.status(400).send(err);
+    })
   }
 
 }

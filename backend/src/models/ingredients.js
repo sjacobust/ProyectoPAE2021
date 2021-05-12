@@ -12,8 +12,12 @@ class Ingredients extends Database {
     return this.findAll(limit);
   }
 
-  addIngrediente(limit) {
-    
+  addIngredient(ingredient) {
+    return this.insertOne(ingredient);
+  }
+
+  deleteIngredient(ingredient) {
+    return this.deleteOne(ingredient);
   }
   
 }

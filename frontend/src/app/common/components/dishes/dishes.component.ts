@@ -8,12 +8,11 @@ import { MenuService } from '../../services/menu.service';
 })
 export class DishesComponent implements OnInit {
 
-  @Input() menu:any;
+  menu:any = [];
   menuLength:any = 0;
 
   constructor(private menuService:MenuService) {
     this.menuService.getDishes().then(result => {
-      console.log(result)
       this.menu = result;
     });
   }

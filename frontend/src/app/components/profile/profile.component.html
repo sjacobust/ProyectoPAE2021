@@ -1,14 +1,37 @@
+<div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="deleted">
+  <strong>Dirección Borrada</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="added">
+  <strong>Dirección Añadida!</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="alert alert-primary alert-dismissible fade show" role="alert" *ngIf="updated">
+  <strong>Dirección Actualizada!</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
 <div class="grid">
   <div class="grid-row">
-    <div class="col-s-12">
+    <div class="col-s-12 col-d-12 col-t-12 col-l-12 col-m-12">
       <h1>Tu perfil</h1>
     </div>
   </div>
   <div class="grid-row">
-    <div class="col-s-6">
+    <div class="col-s-6 col-m-12">
       <div class="grid">
         <div class="grid-row">
-          <img src="{{user.img}}" alt="Foto de Perfil" class="col-s-4" *ngIf="user.img">
+          <img src="{{user.img}}" alt="Foto de Perfil" class="col-s-4" *ngIf="user.img else noImage">
+          <ng-template #noImage><img src="https://hope.be/wp-content/uploads/2015/05/no-user-image.gif" alt="Foto de Perfil" class="col-s-4"></ng-template>
           <div class="col-s-8">
             <div class="grid">
               <div class="grid-row">
@@ -25,7 +48,9 @@
           </div>
         </div>
         <div class="grid-row">
-
+          <div class="col-s-12">
+            <button class='btn btn-secondary'>Cambiar imagen de Perfil</button>
+          </div>
         </div>
       </div>
     </div>
@@ -36,18 +61,25 @@
             <h3>Direcciones:</h3>
           </div>
         </div>
-        <div class="grid-row" *ngIf="user.addresses else noAddresses">
+        <div class="grid-row" >
           <div class="col-s-12 grid">
-            <div class="grid-row" *ngFor="let userAddress of user.addresses; let i = index" [attr.data-index]="i">
-              <div class="col-s-8">
-                <p #addressToDelete><b>{{i + 1}}.</b> {{userAddress}}</p>
-              </div>
-              <div class="col-s-2">
-                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteAddress" (click)="deleteAddress(userAddress)"><i class="fas fa-trash-alt" ></i></button>
-              </div>
-              <div class="col-s-2">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#editAddress" (click)="editAddress(userAddress)"><i class="fas fa-edit"></i></button>
-              </div>
+            <div class="grid-row" >
+              <table class="table table-sm table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Dirección</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="user.addresses.length > 0 else noAddresses">
+                  <tr *ngFor="let userAddress of user.addresses; let i = index" [attr.data-index]="i">
+                    <td>{{i + 1}}</td>
+                    <td>{{userAddress}}</td>
+                    <td><button class="btn btn-danger" data-toggle="modal" data-target="#deleteAddress" (click)="getAddress(userAddress)"><i class="fas fa-trash-alt" ></i></button></td>
+                    <td><button class="btn btn-primary" data-toggle="modal" data-target="#updateAddress" (click)="getAddress(userAddress)"><i class="fas fa-edit"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -92,10 +124,85 @@
             </div>
             <div class="grid-row">
               <div class="col-s-6">
+                <label for="addressLine2">Dirección renglón #2:</label>
+              </div>
+              <div class="col-s-6">
+                <input type="text" name="addressLine2" id="addressLine2" value="''" placeholder="Dirección #2" [(ngModel)]="address.dir2" class="form-control">
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-s-6">
+                <label for="zipCode">Código Postal:</label>
+              </div>
+              <div class="col-s-6">
+                <input type="text" name="zipCode" id="zipCode" placeholder="Código Postal" [(ngModel)]="address.zipCode" class="form-control">
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-s-6">
+                <label for="city">Ciudad:</label>
+              </div>
+              <div class="col-s-6">
+                <input type="text" name="city" id="city" placeholder="Ciudad" [(ngModel)]="address.city" class="form-control">
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-s-6">
+                <label for="states">Estado:</label>
+              </div>
+              <div class="col-s-6">
+                <select id="states" name="states" placeholder="Elige el estado" class="form-control" [(ngModel)]="address.state">
+                    <option class="form-control" name="state" *ngFor="let state of states" >{{state.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-s-6"><button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button></div>
+              <div class="col-s-6"><button class="btn btn-primary">Guardar</button></div>
+            </div>
+          </div>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateAddress" tabindex="-1" aria-labelledby="updateAddress" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateAddress">Actualiza la Dirección</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form (submit)="updateAddress()">
+        <div class="modal-body">
+          <div class="grid">
+            <div class="grid-row">
+              <div class="col-s-12">
+                <p><b>Estás actualizando la siguiente dirección:</b></p>
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-s-12">
+                {{oldAddress}}
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-s-6">
+                <label for="addressLine1">Dirección renglón #1:</label>
+              </div>
+              <div class="col-s-6">
+                <input type="text" name="addressLine1" id="addressLine1" placeholder="Dirección #1" [(ngModel)]="address.dir1" class="form-control">
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-s-6">
                 <label for="addressLine1">Dirección renglón #2:</label>
               </div>
               <div class="col-s-6">
-                <input type="text" name="addressLine2" id="addressLine1" placeholder="Dirección #2" [(ngModel)]="address.dir2" class="form-control">
+                <input type="text" name="addressLine2" id="addressLine1" value="''" placeholder="Dirección #2" [(ngModel)]="address.dir2" class="form-control">
               </div>
             </div>
             <div class="grid-row">
@@ -103,7 +210,7 @@
                 <label for="addressLine1">Código Postal:</label>
               </div>
               <div class="col-s-6">
-                <input type="text" name="zipCode" id="zipCode" placeholder="Código Postal" [(ngModel)]="address.zipCode" class="form-control">
+                <input type="text" name="zipCode" id="zipCode"  placeholder="Código Postal" [(ngModel)]="address.zipCode" class="form-control">
               </div>
             </div>
             <div class="grid-row">
@@ -120,7 +227,7 @@
               </div>
               <div class="col-s-6">
                 <select id="states" name="states" placeholder="Elige el estado" class="form-control" [(ngModel)]="address.state">
-                    <option class="form-control" value="{{state.name}}" name="state" *ngFor="let state of states" >{{state.name}}</option>
+                    <option class="form-control" name="state" *ngFor="let state of states" >{{state.name}}</option>
                 </select>
               </div>
             </div>
@@ -134,3 +241,52 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="deleteAddress" tabindex="-1" role="dialog" aria-labelledby="deleteAddressLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteAddressLabel">Eliminar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>¡Esta es una acción permanente!</h3>
+        <p>¿Estás segure de querer borrar la siguiente direccion?</p>
+        <p>{{oldAddress}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click) = "deleteAddress()">Borrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="deleteAddress" tabindex="-1" role="dialog" aria-labelledby="deleteAddressLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteAddressLabel">Eliminar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>¡Esta es una acción permanente!</h3>
+        <p>¿Estás segure de querer borrar la siguiente direccion?</p>
+        <p>{{oldAddress}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click) = "deleteAddress()">Borrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
