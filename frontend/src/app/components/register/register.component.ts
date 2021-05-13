@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     telephone: ""
   };
 
-  form: FormGroup;
+  form!: FormGroup;
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private socketIoService: SocketIoService, private router: Router, private authService: SocialAuthService
   ) {
@@ -67,9 +67,7 @@ export class RegisterComponent implements OnInit {
         name: this.form.controls.name.value + " " + this.form.controls.lastname.value,
         email: this.form.controls.email.value,
         telephone: this.form.controls.telephone.value,
-        password: this.form.controls.password.value,
-        token: "",
-        expire_date: ""
+        password: this.form.controls.password.value
       }
       this.userService.signUp(this.registerInfo).then((result) => {
         this.router.navigate(['home'], { queryParams: { registered: 'true' } });

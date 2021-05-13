@@ -1,4 +1,4 @@
-<div class="grid" *ngIf='weeklyMenu.length > 0 else noMenu'>
+<div class="grid" *ngIf='weeklyMenu.length > 0 && weeklyMenu[week + 1] else noMenu'>
   <div class="grid-row">
     <div class="col-s-9 col-d-12 col-l-12 col-t-12 col-m-12">
       <div class="grid">
@@ -10,7 +10,7 @@
                 <div class="grid">
                   <div class="grid-row">
                     <div class="col-s-12 col-d-12">
-                      <h2>{{weeklyMenu[week].dish}}</h2>
+                      <h2>{{weeklyMenu[week].name}}</h2>
                     </div>
                   </div>
                   <div class="grid-row">
@@ -79,7 +79,12 @@
     <div class="grid">
       <div class="grid-row">
         <div class="col-s-12 col-d-12">
-          <h3>Sorpréndete la próxima semana</h3>
+          <h3>Sorpréndete el próximo mes</h3>
+        </div>
+      </div>
+      <div class="grid-row">
+        <div class="col-s-12 col-d-12">
+          <p>¡Estamos preparando algo delicioso para ti!</p>
         </div>
       </div>
     </div>

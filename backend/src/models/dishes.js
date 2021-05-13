@@ -11,6 +11,14 @@ class Dishes extends Database {
   getAllDishes(limit) {
     return this.findAll(limit);
   }
+
+  addDish(dish) {
+    return this.insertOne(dish);
+  }
+
+  deleteDish(dish) {
+    return this.deleteOne(dish);
+  }
   
 }
 

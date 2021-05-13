@@ -3,6 +3,9 @@ const router = express.Router();
 
 const { UsersController } = require("./../src/controllers/");
 
+const { authMiddleware } = require('../src/middlewares')
+
+
  /**
  * @swagger
  * /addresses:
@@ -20,7 +23,7 @@ const { UsersController } = require("./../src/controllers/");
  *      404:
  *        description: No se encuentra la Dirección
  */
- router.post('/addresses', UsersController.addAddresses);
+ router.post('/addresses', authMiddleware, UsersController.addAddresses);
 
  /**
  * @swagger
@@ -39,7 +42,7 @@ const { UsersController } = require("./../src/controllers/");
  *      404:
  *        description: No se encuentra la Dirección
  */
- router.put('/addresses', UsersController.updateAddress);
+ router.put('/addresses', authMiddleware, UsersController.updateAddress);
 
 
  /**

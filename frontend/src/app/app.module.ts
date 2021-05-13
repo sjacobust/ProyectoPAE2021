@@ -22,6 +22,12 @@ import { environment } from 'src/environments/environment';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { NotAuthorizedComponent } from './common/components/not-authorized/not-authorized.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { UsersComponent } from './components/admin/users/users.component';
+import { AdminsComponent } from './components/admin/admins/admins.component';
+import { DishesAdminComponent } from './components/admin/dishes-admin/dishes-admin.component';
+import { IngredientsAdminComponent } from './components/admin/ingredients-admin/ingredients-admin.component';
+import { MonthlyMenuComponent } from './components/admin/monthly-menu/monthly-menu.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +46,11 @@ import { NotAuthorizedComponent } from './common/components/not-authorized/not-a
     ProfileComponent,
     AdminComponent,
     NotAuthorizedComponent,
+    UsersComponent,
+    AdminsComponent,
+    DishesAdminComponent,
+    IngredientsAdminComponent,
+    MonthlyMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +58,8 @@ import { NotAuthorizedComponent } from './common/components/not-authorized/not-a
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    SocialLoginModule
+    SocialLoginModule,
+    FontAwesomeModule
   ],
   providers: [
     {

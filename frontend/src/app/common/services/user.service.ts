@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from "./../../../environments/environment";
@@ -11,8 +11,11 @@ export class UserService {
 
   
   url:string = environment.apiUrl;
+  private httpOptions =  new HttpHeaders({
+    Authorization: this.authService.getToken() || ''
+  });
 
-  constructor(private httpClient:HttpClient) {
+  constructor(private httpClient:HttpClient, private authService:AuthService) {
 
   }
 
@@ -36,4 +39,24 @@ export class UserService {
     return this.httpClient.delete(this.url + "/logout/" + token);
   }
 
+  isAdmin():Promise<boolean>{
+    const token = this.authService.getToken();
+    return this.getUserByToken(token).then(result => {
+      if(result) {
+        if(result[0].isAdmin) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      return false;
+    }).catch(err => {
+      return false;
+    });
+  }
+
+  updateUser(user:any):Promise<any> {
+    console.log("formdata", user);
+    return this.httpClient.put(this.url + `/users`, user, {headers: this.httpOptions}).toPromise();
+  }
 }

@@ -3,10 +3,8 @@ const router = express.Router();
 
 const { UsersController } = require("./../src/controllers/");
 
-const getAllUsers = (req, res, next) => {
-    if (req.query.email) return next();
-    UsersController.index(req, res);
-}
+const { authMiddleware, isAdminMiddleware, uploadFile } = require('../src/middlewares')
+
 
 /**
  * @swagger
@@ -26,6 +24,26 @@ const getAllUsers = (req, res, next) => {
  *        description: error creando usuario
  */
  router.post('/signup', UsersController.signup);
+
+
+/**
+ * @swagger
+ * /admin:
+ *  post:
+ *    description: addAdmin
+ *    parameters:
+ *      - in: body
+ *        name: nombre, email, contraseña
+ *        description: Alta de usuario tipo Administrador
+ *        schema:
+ *          type: string
+ *    responses:
+ *      200:
+ *        description: se creo el usuario
+ *      400:
+ *        description: error creando usuario
+ */
+ router.post('/admin', UsersController.addAdmin);
 
 /**
  * @swagger
@@ -47,6 +65,7 @@ const getAllUsers = (req, res, next) => {
  router.post('/login', UsersController.login);
 
 
+
  // Users
  /**
   * @swagger
@@ -63,7 +82,27 @@ const getAllUsers = (req, res, next) => {
   *      200:
   *        description: regresa al usuario
   */
- router.get('/users', UsersController.getOne);
+ router.get('/users', authMiddleware, UsersController.getOne, isAdminMiddleware, UsersController.getAll);
+
+
+ // Users
+ /**
+  * @swagger
+  * /users/image:
+  *  get:
+  *    description: Usuario
+  *    parameters:
+  *      - in: query
+  *        name: email
+  *        description: email del usuario deseado
+  *        schema:
+  *          type: string
+  *    responses:
+  *      200:
+  *        description: regresa al usuario
+  */
+ router.get('/users/image', authMiddleware, UsersController.getImage);
+
 
  // Users
  /**
@@ -97,7 +136,26 @@ const getAllUsers = (req, res, next) => {
   *      404:
   *        description: No existe el usuario
   */
- router.put('/users', UsersController.getOne);
+ router.put('/users', authMiddleware, uploadFile.single('profilePic'), UsersController.updateUser);
+
+
+ // Users
+ /**
+  * @swagger
+  * /users:
+  *  delete:
+  *    description: Usuario
+  *    parameters:
+  *      - in: query
+  *        email: Email del usuario a borrar
+  *        token: Token del Administrador que esta haciendo la eliminación
+  *    responses:
+  *      200:
+  *        description: Mensaje de actualización lograda
+  *      404:
+  *        description: No existe el usuario
+  */
+ router.delete('/users', isAdminMiddleware, UsersController.deleteUser);
 
 
  /**

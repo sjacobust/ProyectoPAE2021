@@ -1,0 +1,32 @@
+@import '../../../../styles/sass/variables';
+@import '../../../../styles/sass/mixins';
+
+table {
+    background-color: $white-color;
+}
+
+.table-wrapper {
+    max-height: 50em;
+    overflow: auto;
+    display:inline-block;
+}
+
+@each $device, $pixels in $devices {
+    @media (max-width: $pixels) {
+        @if $pixels > 480px {
+            .grid .grid-row {
+                display: flex;
+            }
+        } @else {
+            .grid .grid-row {
+                display: block;
+            }
+        }
+    }
+    
+}
+
+.modal-body .grid {
+    background-color: white;
+    width: 100%;
+}

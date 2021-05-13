@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,9 +11,14 @@ export class AuthService {
 
   loginStatus:BehaviorSubject<any> = new BehaviorSubject(false);
 
-  tokenUrl:string = environment.apiUrl + "/auth";
+  url:string = environment.apiUrl;
 
-  constructor(private userService:UserService) {
+  private httpOptions =  new HttpHeaders({
+    'Content-Type':  'application/json',
+    Authorization: this.getToken() || ''
+  });
+
+  constructor(private httpClient:HttpClient) {
     this.loginStatus.next(this.isLoggedIn());
 
   }
@@ -34,5 +40,9 @@ export class AuthService {
   logout() {
     localStorage.clear();
     this.loginStatus.next(false);
+  }
+
+  getProfilePicture() {
+    return this.httpClient.get(this.url + '/users/image', {headers: this.httpOptions, responseType: "blob"});
   }
 }
