@@ -70,7 +70,7 @@ export class AdminComponent implements OnInit {
 
   deleteDocument(){
     const collection = this.entity.entity;
-    if(collection == 'admin' || collection == 'users') {
+    if(collection == 'admin' || collection == 'user') {
       this.adminService.deleteUser(this.entity.docObject.email).then(result => {
         location.replace('/admin?deleted=true');
       }).catch(err => {

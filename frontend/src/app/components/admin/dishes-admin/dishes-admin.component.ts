@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dishes-admin',
@@ -12,9 +13,16 @@ export class DishesAdminComponent implements OnInit {
   @Output() deleteEvent:any = new EventEmitter();
   @Output() updateEvent:any = new EventEmitter();
 
-  constructor() { }
+  form!: FormGroup
+
+  constructor(private formBuilder:FormBuilder) { }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      name: ["", Validators.required],
+      description: ["", Validators.required],
+      price: ["", [Validators.required, Validators.email]]
+    })
   }
 
   deleteClick(event:any, entity:any) {
@@ -24,5 +32,18 @@ export class DishesAdminComponent implements OnInit {
     }
     this.deleteEvent.emit(payload);
   }
+
+  editClick(event:any, entity:any) {
+    const payload = {
+      docObject: event,
+      entity: entity
+    }
+    this.updateEvent.emit(payload);
+  }
+
+  addDish() {
+
+  }
+
 
 }

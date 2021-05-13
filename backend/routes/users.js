@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { UsersController } = require("./../src/controllers/");
 
-const { authMiddleware, isAdminMiddleware } = require('../src/middlewares')
+const { authMiddleware, isAdminMiddleware, uploadFile } = require('../src/middlewares')
 
 
 /**
@@ -84,6 +84,26 @@ const { authMiddleware, isAdminMiddleware } = require('../src/middlewares')
   */
  router.get('/users', authMiddleware, UsersController.getOne, isAdminMiddleware, UsersController.getAll);
 
+
+ // Users
+ /**
+  * @swagger
+  * /users/image:
+  *  get:
+  *    description: Usuario
+  *    parameters:
+  *      - in: query
+  *        name: email
+  *        description: email del usuario deseado
+  *        schema:
+  *          type: string
+  *    responses:
+  *      200:
+  *        description: regresa al usuario
+  */
+ router.get('/users/image', authMiddleware, UsersController.getImage);
+
+
  // Users
  /**
   * @swagger
@@ -116,7 +136,7 @@ const { authMiddleware, isAdminMiddleware } = require('../src/middlewares')
   *      404:
   *        description: No existe el usuario
   */
- router.put('/users', authMiddleware, UsersController.getOne);
+ router.put('/users', authMiddleware, uploadFile.single('profilePic'), UsersController.updateUser);
 
 
  // Users
@@ -135,7 +155,7 @@ const { authMiddleware, isAdminMiddleware } = require('../src/middlewares')
   *      404:
   *        description: No existe el usuario
   */
- router.put('/users', isAdminMiddleware, UsersController.getOne);
+ router.delete('/users', isAdminMiddleware, UsersController.deleteUser);
 
 
  /**

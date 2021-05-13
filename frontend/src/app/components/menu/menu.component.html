@@ -1,4 +1,4 @@
-<div class="grid" *ngIf='weeklyMenu.length > 0 else noMenu'>
+<div class="grid" *ngIf='weeklyMenu.length > 0 && weeklyMenu[week + 1] else noMenu'>
   <div class="grid-row">
     <div class="col-s-9 col-d-12 col-l-12 col-t-12 col-m-12">
       <div class="grid">

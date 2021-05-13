@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const path = require('path');
 const app = express();
 
 const { authMiddleware } = require('./src/middlewares');
@@ -39,7 +40,7 @@ app.use(cors());
 
 app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
-app.use(express.json())
+app.use('', express.json())
 
 app.use("/", authMiddleware, dishesRouter);
 app.use("/", authMiddleware, ingredientsRouter);
@@ -47,7 +48,7 @@ app.use("/", authMiddleware, usersRouter);
 app.use("/", authMiddleware, authRouter);
 app.use("/", authMiddleware, addressesRouter);
 
-
+app.use('/', express.static(path.join(__dirname, 'dist', 'assets')));
 
 app.get('/', (req, res) => {
     res.end('Welcome to the Project!');

@@ -12,7 +12,6 @@ export class UserService {
   
   url:string = environment.apiUrl;
   private httpOptions =  new HttpHeaders({
-    'Content-Type':  'application/json',
     Authorization: this.authService.getToken() || ''
   });
 
@@ -25,7 +24,7 @@ export class UserService {
   }
 
   getUserByToken(token:any):Promise<any> {
-    return this.httpClient.get(this.url + `/users?token=${token}`, {headers: this.httpOptions}).toPromise();
+    return this.httpClient.get(this.url + `/users?token=${token}`).toPromise();
   }
 
   login(credentials:any):Promise<any> {
@@ -56,7 +55,8 @@ export class UserService {
     });
   }
 
-  updateUser(email:string) {
-
+  updateUser(user:any):Promise<any> {
+    console.log("formdata", user);
+    return this.httpClient.put(this.url + `/users`, user, {headers: this.httpOptions}).toPromise();
   }
 }

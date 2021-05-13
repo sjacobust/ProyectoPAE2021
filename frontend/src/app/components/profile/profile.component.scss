@@ -5,6 +5,11 @@
     background-color: white;
 }
 
+img {
+    border-radius: 50%;
+    text-align: right;
+}
+
 
 label {
     text-align: right;
@@ -18,4 +23,22 @@ table {
     max-height: 50em;
     overflow: auto;
     display:inline-block;
+}
+
+@each $device, $pixels in $devices {
+    @media (max-width: $pixels) {
+        @if $pixels > 480px {
+            .grid-row {
+                display: flex;
+            }
+        } @else {
+            .grid-row {
+                display: initial;
+            }
+        }
+    }
+}
+
+[class*='col-'] .grid {
+    width: 100%;
 }

@@ -39,15 +39,19 @@ class UserController {
   }
 
   getAll(req, res) {
-    if(req.query.admins && req.query.admins == 'true') {
-      users.find({ isAdmin: true }, 0).then(users => {
+    if (req.query.admins && req.query.admins == 'true') {
+      users.find({
+        isAdmin: true
+      }, 0).then(users => {
         res.status(200).send(users);
       }).catch(err => {
         console.log(err);
         res.status(404).send("No users found");
       });
     } else {
-      users.find({ isAdmin: false }, 0).then(users => {
+      users.find({
+        isAdmin: false
+      }, 0).then(users => {
         res.status(200).send(users);
       }).catch(err => {
         console.log(err);
@@ -81,17 +85,24 @@ class UserController {
     }
   }
 
+  getImage(req, res, next) {
+    if (req.headers.authorization) {
+      token.findUserByToken(req.headers.authorization).then(result => {
+        res.send(result[0].img).status(200);
+      }).catch(err => {
+        res.status(400).send(err);
+      })
+    } 
+  }
+
   login(req, res) {
     const hashedPassword = getHashedPassword(req.body.password);
     users.validate(req.body.email, hashedPassword).then(result => {
       console.log('Result usuario', result);
       if (result) {
         token.create(result[0]._id.toString()).then(tokenResult => {
-          console.log('Created token: ', tokenResult);
-          console.log("Got to token result");
           res.send(tokenResult.ops[0]);
         }).catch(err => {
-          console.log("Failed to token result");
           console.log('Failed to create token', err);
           res.status(404).send();
         });
@@ -99,7 +110,6 @@ class UserController {
         res.status(400).send("Token not Created");
       }
     }).catch(err => {
-      console.log("Failed to token result", err);
       res.status(400).send(err);
     })
   }
@@ -186,6 +196,7 @@ class UserController {
       telephone: req.body.telephone,
       password: hashedPassword,
       addresses: [],
+      img: "",
       cart: [],
       isAdmin: false
     }
@@ -220,12 +231,12 @@ class UserController {
   }
 
   addAddresses(req, res) {
-    token.findUserByToken(req.body.token).then(result => {
+    token.findUserByToken(req.headers.authorization).then(result => {
       if (result.length > 0) {
         console.log(result[0]);
         result[0].addresses.push(req.body.address);
         console.log(result[0]);
-        users.update(result[0]);
+        users.updateUser(result[0]);
         res.status(200).send({
           message: "Address Added Successfully!"
         });
@@ -238,7 +249,7 @@ class UserController {
   }
 
   updateAddress(req, res) {
-    token.findUserByToken(req.query.token).then(result => {
+    token.findUserByToken(req.headers.authorization).then(result => {
       if (result.length > 0) {
         console.log(result[0]);
         if (req.query.address) {
@@ -248,7 +259,7 @@ class UserController {
             result[0].addresses[index] = req.body.address;
           }
           console.log(result[0]);
-          users.update(result[0]);
+          users.updateUser(result[0]);
           res.status(200).send({
             message: "Address Removed Successfully!"
           });
@@ -266,18 +277,17 @@ class UserController {
   }
 
   deleteAddress(req, res) {
-    token.findUserByToken(req.query.token).then(result => {
+    token.findUserByToken(req.headers.authorization).then(result => {
       if (result.length > 0) {
         console.log(result[0]);
         if (req.query.address) {
-          
+
           const index = result[0].addresses.indexOf(req.query.address);
 
           if (index > -1) {
             result[0].addresses.splice(index, 1);
           }
-          console.log(result[0]);
-          users.update(result[0]);
+          users.updateUser(result[0]);
           res.status(200).send({
             message: "Address Removed Successfully!"
           });
@@ -298,14 +308,53 @@ class UserController {
     users.findByEmail(req.query.email).then(result => {
       if (result.length > 0) {
         console.log(result[0]);
-         users.deleteUser(result[0]).then(response => {
-          res.status(200).send("User removed");
-         });
+        users.deleteUser(result[0]).then(response => {
+          res.status(200).send({message: "User removed"});
+        });
       }
     }).catch(err => {
       res.status(400).send({
-        message: "Couldn't Find Token"
+        message: "Couldn't Find User by Email"
       });
+    });
+  }
+
+  updateUser(req, res) {
+    token.findUserByToken(req.headers.authorization).then(result => {
+      if (result.length > 0) {
+
+        console.log(result)
+
+        let hashedPassword = result[0].password;
+
+        if(req.body.newPassword) {
+           hashedPassword = getHashedPassword(req.body.newPassword);
+        }
+
+        console.log(req.file);
+        
+        const document = {
+          _id: result[0]._id,
+          name: req.body.name,
+          email: req.body.email,
+          telephone: req.body.telephone,
+          password: hashedPassword,
+          addresses: result[0].addresses,
+          img: req.file || result[0].img,
+          cart: result[0].cart,
+          isAdmin: result[0].isAdmin
+        }
+        users.updateUser(document).then(result => {
+          res.send(result).status(200);
+        }).catch(err => {
+          console.log('Error: ', err);
+          res.status(400).send(err);
+        })
+
+      }
+    }).catch(err => {
+      res.status(404).send("User not Found");
+      console.log(err);
     });
   }
 

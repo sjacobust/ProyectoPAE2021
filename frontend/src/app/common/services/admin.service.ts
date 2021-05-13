@@ -12,7 +12,6 @@ export class AdminService {
   url:string = environment.apiUrl;
 
   private httpOptions =  new HttpHeaders({
-    'Content-Type':  'application/json',
     Authorization: this.authService.getToken() || ''
   });
 

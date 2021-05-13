@@ -3,7 +3,7 @@
     <h3>Platillos:</h3>
   </div>
   <div class="col-s-2 col-d-2 col-l-2 col-t-2 col-m-2">
-    <button class="btn btn-success"><i class="fas fa-plus"></i></button>
+    <button data-toggle="modal" data-target="#addDish" class="btn btn-success"><i class="fas fa-plus"></i></button>
   </div>
 </div>
 <div class="grid-row">
@@ -28,5 +28,65 @@
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+
+<div class="modal fade" id="addDish" tabindex="-1" aria-labelledby="addDish" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addDish">Añade un Platillo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="form" (submit)="addDish()" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="grid">
+            <div class="grid-row">
+              <div class="col-s-6">
+                <label for="name">Nombre del Platillo:</label>
+              </div>
+              <div class="col-s-6">
+                <input type="text" name="name" id="name" placeholder="Nombre del Platillo" formControlName="name"
+                  class="form-control">
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-s-6">
+                <label for="description">Descripción:</label>
+              </div>
+              <div class="col-s-6">
+                <input type="text" name="description" id="description" placeholder="Descripción"
+                  formControlName="description" class="form-control">
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-s-6">
+                <label for="price">Precio:</label>
+              </div>
+              <div class="col-s-6">
+                <input type="text" name="price" id="price" placeholder="Precio" formControlName="price"
+                  class="form-control">
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-s-6">
+                <label for="image">Imagen:</label>
+              </div>
+              <div class="col-s-6">
+                <input type="file" id="dishPic" name="dishPic" accept="image/png, image/jpeg">
+              </div>
+            </div>
+            <div class="grid-row">
+              <div class="col-s-6"><button type="button" class="btn btn-secondary"
+                  data-dismiss="modal">Cancelar</button></div>
+              <div class="col-s-6"><button class="btn btn-primary">Guardar</button></div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

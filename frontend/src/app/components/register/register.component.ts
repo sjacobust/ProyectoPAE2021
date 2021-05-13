@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
     telephone: ""
   };
 
-  form: FormGroup;
+  form!: FormGroup;
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private socketIoService: SocketIoService, private router: Router, private authService: SocialAuthService
   ) {
