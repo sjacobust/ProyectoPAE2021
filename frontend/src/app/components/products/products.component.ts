@@ -15,6 +15,10 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.menuService.getDishes().then(result => {
+      console.log(result)
+      this.menu = result;
+    });
   }
 
 }
